@@ -1,10 +1,17 @@
 package Gameobjects.Playfield;
 
+import java.io.Serializable;
+
 import IO.IO;
 
-public class Field {
+public class Field implements Serializable{
 
-    private boolean isShot;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8054963586333812399L;
+
+	private boolean isShot;
 
     private boolean isWater;
 
@@ -33,7 +40,7 @@ public class Field {
                 this.opponentStatus = "~";
     }
 
-    public boolean isIsShot() {
+    public boolean getIsShot() {
         return isShot;
     }
 
@@ -49,7 +56,7 @@ public class Field {
         this.isWater = isWater;
     }
 
-    public boolean isIsHit() {
+    public boolean getIsHit() {
         return isHit;
     }
 
@@ -57,7 +64,7 @@ public class Field {
         this.isHit = isHit;
     }
 
-    public boolean isHasShip() {
+    public boolean getHasShip() {
         return hasShip;
     }
 

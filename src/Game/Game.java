@@ -4,12 +4,20 @@ import Gameobjects.Ships.Ship;
 import Gameobjects.Player.Player;
 import Gameobjects.Playfield.Playfield;
 import IO.IO;
+
+import java.io.Serializable;
 import java.util.ArrayList;
+
 import Helper.Helper;
 
-public class Game {
+public class Game implements Serializable{
 
-    private ArrayList<Player> playerList;
+    /**
+	 *
+	 */
+	private static final long serialVersionUID = -4356896699088096722L;
+
+	private ArrayList<Player> playerList;
 
     private ArrayList<Ship> shipList;
 
@@ -50,32 +58,60 @@ public class Game {
     private void placeAllShips() {
         error = false;
 
-        for (Player player : playerList) {
-            IO.println("Spieler " + player.getName() + " Sie können nun folgende Schiffe setzen: ");
-            player.printShipList();
-            ArrayList<Ship> ships = player.getShips();
-            System.out.println(ships.size());
-            for (int s = 0; s < ships.size();) {
-                IO.print("Bitte geben Sie die Koordinaten für " + ships.get(s).getName() + " " + ships.get(s).getNumber() + " ein:");
-                do {
-                    coordinateInput = IO.readString().toLowerCase(); //Großbuchstaben-> Kleinbuchstaben
-                    //Teste Eingabe mit RegEx(^ Anfang, 1 Zahl (1-9) und 1 oder keine Zahl(0-9) und 1 Buchstabe (a-z), $ Ende
-                    if (coordinateInput.matches("^[1-9]{1}[0-9]{0,1}[a-z]{1}$")) {
-                        error = false;
-                    } else {
-                        IO.println("Falsche Eingabe, bitte geben sie zuerst die Nummer und dann den Buchstaben des Feldes ein: ");
-                        error = true;
-                    }
-                } while (error);
-                shipOrientation = Helper.checkOrientation();
-                //Schiff wird gesetzt
-                if (!placeShip(ships.get(s), coordinateInput, shipOrientation, player.getPlayfield(), player.getOpponentField())) {
-                    IO.println("Das Schiff konnte nicht gesetzt werden. Bitte erneut versuchen.");
-                } else {
-                    s++;
-                }
-
-            }
+        for (int playerNumber = 0; playerNumber < playerList.size(); playerNumber++) {
+        	if(playerList.get(playerNumber).getIsAI() == false){
+	            IO.println("Spieler " + playerList.get(playerNumber).getName() + " Sie können nun folgende Schiffe setzen: ");
+	            playerList.get(playerNumber).printShipList();
+	            ArrayList<Ship> ships = playerList.get(playerNumber).getShips();
+	            System.out.println(ships.size());
+	            for (int s = 0; s < ships.size();) {
+	                IO.print("Bitte geben Sie die Koordinaten für " + ships.get(s).getName() + " " + ships.get(s).getNumber() + " ein:");
+	                do {
+	                    coordinateInput = IO.readString().toLowerCase(); //Großbuchstaben-> Kleinbuchstaben
+	                    //Teste Eingabe mit RegEx(^ Anfang, 1 Zahl (1-9) und 1 oder keine Zahl(0-9) und 1 Buchstabe (a-z), $ Ende
+	                    if (coordinateInput.matches("^[1-9]{1}[0-9]{0,1}[a-z]{1}$")) {
+	                        error = false;
+	                    } else {
+	                        IO.println("Falsche Eingabe, bitte geben sie zuerst die Nummer und dann den Buchstaben des Feldes ein: ");
+	                        error = true;
+	                    }
+	                } while (error);
+	                shipOrientation = Helper.checkOrientation();
+	                //Schiff wird gesetzt
+	                if (!placeShip(ships.get(s), coordinateInput, shipOrientation, playerList.get(playerNumber).getPlayfield(), playerList.get(playerNumber).getOpponentField())) {
+	                    IO.println("Das Schiff konnte nicht gesetzt werden. Bitte erneut versuchen.");
+	                } else {
+	                    s++;
+	                }
+	
+	            }
+        	} else{
+        		IO.println("Spieler " + playerList.get(playerNumber).getName() + " Sie können nun folgende Schiffe setzen: ");
+	            playerList.get(playerNumber).printShipList();
+	            ArrayList<Ship> ships = playerList.get(playerNumber).getShips();
+	            System.out.println(ships.size());
+	            for (int s = 0; s < ships.size();) {
+	                IO.print("Bitte geben Sie die Koordinaten für " + ships.get(s).getName() + " " + ships.get(s).getNumber() + " ein:");
+	                do {
+	                    coordinateInput = Helper.aiChooseCoordinate(playerList, playerNumber);
+	                    //Teste Eingabe mit RegEx(^ Anfang, 1 Zahl (1-9) und 1 oder keine Zahl(0-9) und 1 Buchstabe (a-z), $ Ende
+	                    if (coordinateInput.matches("^[1-9]{1}[0-9]{0,1}[a-z]{1}$")) {
+	                        error = false;
+	                    } else {
+	                        IO.println("Falsche Eingabe, bitte geben sie zuerst die Nummer und dann den Buchstaben des Feldes ein: ");
+	                        error = true;
+	                    }
+	                } while (error);
+	                shipOrientation = Helper.chooseAiOrientation();
+	                //Schiff wird gesetzt
+	                if (!placeShip(ships.get(s), coordinateInput, shipOrientation, playerList.get(playerNumber).getPlayfield(), playerList.get(playerNumber).getOpponentField())) {
+	                    IO.println("Das Schiff konnte nicht gesetzt werden. Bitte erneut versuchen.");
+	                } else {
+	                    s++;
+	                }
+	
+	            }
+        	}
 
         }
     }

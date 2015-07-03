@@ -1,13 +1,20 @@
 package Gameobjects.Playfield;
 
 
+import java.io.Serializable;
+
 import Game.Settings;
 import Gameobjects.Playfield.Field;
 import IO.IO;
 
-public class Playfield {
+public class Playfield implements Serializable{
 
-    private Field[][] fieldMatrix;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5068259163966030799L;
+
+	private Field[][] fieldMatrix;
 
     private String fieldNumber;
 

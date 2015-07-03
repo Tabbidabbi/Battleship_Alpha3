@@ -4,13 +4,21 @@ import Game.Settings;
 import Gameobjects.Playfield.Playfield;
 import Gameobjects.Ships.*;
 import IO.IO;
+
+import java.io.Serializable;
 import java.util.ArrayList;
+
 import Game.Game;
 
-public class Player {
+public class Player implements Serializable{
     
     
-    private int input;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3542755719003023085L;
+
+	private int input;
     
     private int number;
 
@@ -112,7 +120,7 @@ public class Player {
         this.lost = lost;
     }
 
-    public boolean isIsAI() {
+    public boolean getIsAI() {
         return isAI;
     }
 

@@ -1,8 +1,15 @@
 package Gameobjects.Ships;
 
-public abstract class Ship {
+import java.io.Serializable;
 
-    private int size;
+public abstract class Ship implements Serializable{
+
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7853606283486598296L;
+
+	private int size;
 
     private boolean sunk;
 
