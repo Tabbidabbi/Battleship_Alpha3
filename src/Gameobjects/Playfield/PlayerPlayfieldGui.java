@@ -34,13 +34,15 @@ public class PlayerPlayfieldGui extends JPanel {
         for (int i = 0; i < playfieldMatrix.length; i++) {
             for (int j = 0; j < playfieldMatrix[i].length; j++) {
                 playfieldMatrix[i][j] = new FieldGui();
-                playfieldMatrix[i][0].setText("" + i);
-                playfieldMatrix[i][0].setEnabled(false);
-                playfieldMatrix[i][0].setActive(false);
-                playfieldMatrix[0][j].setText("" + j);
-                playfieldMatrix[0][0].setText("Y  /  X");
-                playfieldMatrix[0][j].setEnabled(false);
-                playfieldMatrix[0][j].setActive(false);
+                playfieldMatrix[i][j].setText("" +  i + j);
+                playfieldMatrix[i][j].setActionCommand("" + i + j);
+//                playfieldMatrix[i][0].setText("" + i);
+//                playfieldMatrix[i][0].setEnabled(false);
+//                playfieldMatrix[i][0].setActive(false);
+//                playfieldMatrix[0][j].setText("" + j);
+//                playfieldMatrix[0][0].setText("Y  /  X");
+//                playfieldMatrix[0][j].setEnabled(false);
+//                playfieldMatrix[0][j].setActive(false);
                 playfieldMatrixPanel.add(playfieldMatrix[i][j]);
             }
         }
