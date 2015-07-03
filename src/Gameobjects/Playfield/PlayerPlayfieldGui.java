@@ -22,8 +22,6 @@ public class PlayerPlayfieldGui extends JPanel {
     FieldGui[][] playfieldMatrix;
     JPanel playfieldMatrixPanel;
     
-    private final String alphabet = "#abcdefghijklmnopqrstuvwxyz";
-
     public PlayerPlayfieldGui() {
         currentGameSettings = new Settings();
 
@@ -39,7 +37,8 @@ public class PlayerPlayfieldGui extends JPanel {
                 playfieldMatrix[i][0].setText("" + i);
                 playfieldMatrix[i][0].setEnabled(false);
                 playfieldMatrix[i][0].setActive(false);
-                playfieldMatrix[0][j].setText("" + alphabet.charAt(j));
+                playfieldMatrix[0][j].setText("" + j);
+                playfieldMatrix[0][0].setText("Y  /  X");
                 playfieldMatrix[0][j].setEnabled(false);
                 playfieldMatrix[0][j].setActive(false);
                 playfieldMatrixPanel.add(playfieldMatrix[i][j]);

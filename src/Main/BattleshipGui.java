@@ -75,6 +75,7 @@ public class BattleshipGui extends JFrame{
         this.mainMenuGui.setMenuButtonListener(new MenuHandler());
         this.settingsGui.setSettingsButtonListener(new MenuHandler());
         this.instructionsGui.setInstructionsButtonListener(new MenuHandler());
+        this.gameGui.setGameButtonListener(new MenuHandler());
     }
 
     class MenuHandler implements ActionListener {
@@ -89,6 +90,8 @@ public class BattleshipGui extends JFrame{
                 case "Menu-NewGame":
                     cardLayout.show(panelContainer, "newGame");
                     break;
+                case "Game-MainMenu":
+                    cardLayout.show(panelContainer, "menu");
                 case "Menu-LoadGame":
                     break;
                 case "Menu-Settings":

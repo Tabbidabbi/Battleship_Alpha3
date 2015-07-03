@@ -58,7 +58,6 @@ public class SettingsGui extends JPanel {
     Settings gameSettings = new Settings();
 
     public SettingsGui() {
-//        setPreferredSize(new Dimension(800, 600));
         setLayout(new FlowLayout());
         headerLabel = new JLabel("Einstellungen");
         headerLabel.setFont(new Font("Serif", 25, 25));
@@ -125,8 +124,14 @@ public class SettingsGui extends JPanel {
 
         backButton = new JButton("Hauptmenü");
         backButton.setActionCommand("Settings-MainMenu");
+        backButton.setFont(new Font("Serif", 10, 13));
+        backButton.setBackground(Color.white);
+        backButton.setForeground(Color.black);
         confirmButton = new JButton("Spiel Starten");
         confirmButton.setActionCommand("Settings-ConfirmButton");
+        confirmButton.setFont(new Font("Serif", 10, 13));
+        confirmButton.setBackground(Color.white);
+        confirmButton.setForeground(Color.black);
 
         buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
