@@ -2,6 +2,8 @@ package Gameobjects.Ships;
 
 import java.io.Serializable;
 
+import IO.IO;
+
 public abstract class Ship implements Serializable{
 
     /**
@@ -51,7 +53,7 @@ public abstract class Ship implements Serializable{
         this.size = size;
     }
 
-    public boolean isSunk() {
+    public boolean getIsSunk() {
         return sunk;
     }
 
@@ -87,8 +89,13 @@ public abstract class Ship implements Serializable{
         return currentReloadTime;
     }
 
-    public void setCurrentReloadTime(int currentReloadTime) {
-        this.currentReloadTime = currentReloadTime;
+    public void setCurrentReloadTime() {
+        this.currentReloadTime = this.reloadTime + 1;
+    }
+    
+    //Setzt ReloadTime einen Z�hler runter
+    public void setDownReloadTime() {
+        this.currentReloadTime--;
     }
 
     public int getShootRange() {
@@ -103,8 +110,14 @@ public abstract class Ship implements Serializable{
         return hitpoints;
     }
 
-    public void setHitpoints(int hitpoints) {
-        this.hitpoints = hitpoints;
+    public void setHitpoints() {
+    	this.hitpoints--;
+    	if(getHitpoints() == 0){
+    		setSunk(true);
+    		IO.println("Schiff wurde versenkt.");
+    		//test
+    		IO.println(getNumber()+ " " + getName() + " " + getHitpoints() + " " + getIsSunk());
+    	}
     }
 
     public String getSign() {

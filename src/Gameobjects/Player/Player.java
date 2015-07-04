@@ -34,6 +34,11 @@ public class Player implements Serializable{
     private boolean lost;
 
     private boolean isAI;
+    
+    private int lastHitOpponentNumber;
+	
+	private String aiLastHitCoordinate;
+	
 
     public Player(ArrayList<Player> playerList,Settings currentGameSettings, String name, int number) {
         this.name = name;
@@ -128,9 +133,23 @@ public class Player implements Serializable{
         this.isAI = isAI;
     }
     
- 
-    
-    public void printShipList() {
+    public int getLastHitOpponentNumber() {
+		return lastHitOpponentNumber;
+	}
+
+	public void setLastHitOpponentNumber(int lastHitOpponentNumber) {
+		this.lastHitOpponentNumber = lastHitOpponentNumber;
+	}
+
+	public String getAiLastHitCoordinate() {
+		return aiLastHitCoordinate;
+	}
+
+	public void setAiLastHitCoordinate(String aiLastHitCoordinate) {
+		this.aiLastHitCoordinate = aiLastHitCoordinate;
+	}
+
+	public void printShipList() {
 
         for (Ship ship : ships) {
             IO.println(ship.getName() + "\t" + ship.getNumber() + "\t"

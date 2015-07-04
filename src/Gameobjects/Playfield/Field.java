@@ -44,16 +44,33 @@ public class Field implements Serializable{
         return isShot;
     }
 
-    public void setIsShot(boolean isShot) {
-        this.isShot = isShot;
-    }
+    public int setIsShot(){
+		if(this.isShot == false){
+			this.isShot = true;
+			if(getHasShip() == true){
+				this.setPlayerStatus("X");
+				this.setOpponentStatus("X");
+				this.setIsHit(true);
+				//IO.println("Sie haben ein Schiff getroffen!");
+			}
+			else{
+				this.setPlayerStatus("O");
+				this.setOpponentStatus("O");
+				//IO.println("Sie haben auf Wasser geschossen!");
+			}
+		}
+		else{
+			IO.println("Sie haben bereits auf dieses Feld geschossen. Ein verschenkter Schuss!");
+		}
+		return getShipNumber();
+	}
 
     public boolean getIsWater() {
         return isWater;
     }
 
     public void setIsWater(boolean isWater) {
-        this.isWater = isWater;
+        this.isWater = true;
     }
 
     public boolean getIsHit() {
