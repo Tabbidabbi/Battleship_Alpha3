@@ -30,7 +30,7 @@ public class Field implements Serializable{
     private int shipNumber;
     
     
-    	public Field() {
+    public Field() {
 		this.isShot = false;
 		this.isWater = true;
 		this.isHit = false;

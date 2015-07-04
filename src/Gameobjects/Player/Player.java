@@ -112,7 +112,7 @@ public class Player implements Serializable{
         this.opponentField = opponentField;
     }
 
-    public boolean isLost() {
+    public boolean getisLost() {
         return lost;
     }
 

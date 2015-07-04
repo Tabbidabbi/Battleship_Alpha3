@@ -224,4 +224,120 @@ public class Game implements Serializable{
 
         return true;
     }
+    /*
+    public void playRounds(ArrayList<Player> playerList) {
+        //Runden beginnen
+				
+        //solange es mehr als einen spieler gibt
+        while (checkAmountOfAvailablePlayers(playerList) > 1) {
+            for (int pl = 0; pl < player.length; pl++) {
+
+                //Spieler, die verloren haben, kommen nicht mehr an die Reihe
+                if (player[pl].getIsLost() == false) {
+
+                    //Setzt die Nachladezeit aller Schiffe in jeder Runde um 1 runter
+                    for (int sh = 0; sh < player[pl].getShips().length; sh++) {
+                        if (player[pl].getShips()[sh].getCurrentReloadTime() >= 1) {
+                            player[pl].getShips()[sh].setDownReloadTime();
+                        }
+                    }
+                    
+                    IO.println("Runde " + this.roundNumber + " beginnt.");
+
+                    //Runde des Spielers pla
+                    for (int pla = 0; pla < player.length; pla++) {
+                        if (player[pla].getIsLost() == false) {
+                        	if(player[pla].getIsAiPlayer() == true){
+                        		IO.println("Spieler " + player[pla].getNumber() + ": " + player[pla].getName() + " ist am Zug!");
+                        		player[pla].getField().printPlayField();
+                        		int aiShip = getRandomShip(player, pla);
+                        		int shootRange = player[pl].getShips()[aiShip].getShootRange();
+                        		boolean orientation = false;
+                        		if (shootRange > 1) {
+                        			orientation = chooseAiOrientation();
+                        		}
+                        		int aiOpponent = chooseAiOpponent(player, pla);
+                        		IO.println("Spielfeld vom Gegner: " + player[aiOpponent].getName());
+                        		player[aiOpponent].getOpponentField().printOpponentField();
+                        		//Koordinate wird gew�hlt
+                        		String aiCoordinateToShoot = AiChooseCoordinate(player, pla, player[pla].getAiLastHitCoordinate());
+                        		
+                        		String lastHitCoordinate = aiShootOnPlayField(player, aiOpponent, shootRange, orientation, aiCoordinateToShoot); 
+                        		//Letzte getroffene Koordinate
+                        		player[pla].setAiLastHitCoordinate(lastHitCoordinate);
+                        		
+                        		player[pla].getShips()[aiShip].setCurrentReloadTime();
+                                if (checkIfShipAvailable(player, aiOpponent) == false) {
+                                    player[aiOpponent].setLost(true);
+                                }
+                                if (player[aiOpponent].getIsLost() == true) {
+                                    IO.println(player[aiOpponent].getName() + " hat verloren!");
+                                }
+                        	}
+                        	else{
+                        		IO.println("Spieler " + player[pla].getNumber() + ": " + player[pla].getName() + " ist am Zug!");
+                                player[pla].getField().printPlayField();
+
+                                //1. Auswahl eines verfuegbaren Schiffes. (Methode hierf�r schreiben)
+                                int ship = getAvailableShipToShoot(player, pla);
+
+                                //Reichweite des Schusses, um diese der Methode setShot zu uebergeben
+                                int shootRange = player[pl].getShips()[ship].getShootRange();
+
+                                //Hierfuer noch eine Methode schreiben
+                                boolean orientation = false;
+                                if (shootRange > 1) {
+                                    orientation = setShootOrientation();
+                                }
+                                int opponent = getNumberOfOpponent(player, pla);
+                                //2. Auswahl eines Gegners. (Methode hierfuer schreiben)
+                                //Gibt das Spielfeld des Gegners aus
+                                player[opponent].getOpponentField().printOpponentField();
+                                //3. Koordinate auf dem Spielfeld ausw�hlen. (Methode hierf�r schreiben)
+                                //Abfrage
+                                String koordinate = getKoordinatesToShoot();
+                                //IO.println("Wo soll das Schiff hinschiessen?");
+                                //Einlesen X-Koordinate
+                                //IO.print("X = ");
+                                //int x = IO.readInt();
+                                //Einlesen Y-Koordinate
+                                //IO.print("Y = ");
+                                //int y = IO.readInt();
+
+                                //Schiessen
+                                //4. Der Gegner sagt, ob der Schuss ins Wasser ging, ein Schiff getroffen hat, oder ob ein Schiff versenkt wurde.
+                                //shootOnPlayField(player, opponent, shootRange, orientation, x, y);
+                                shootOnPlayField(player, opponent, shootRange, orientation, koordinate);
+
+                                //Nachladezeit nach Schuss setzen, damit das Schiff erst nachladen muss,
+                                //um wieder schiessen zu koennen
+                                player[pla].getShips()[ship].setCurrentReloadTime();
+
+                                if (checkIfShipAvailable(player, opponent) == false) {
+                                    player[opponent].setLost(true);
+                                }
+
+                                if (player[opponent].getIsLost() == true) {
+                                    //Spieler player[pla] aus dem Spieler-Array nehmen
+                                    IO.println(player[opponent].getName() + " hat verloren!");
+                                }
+                        	}
+                        }
+                            
+                    }
+                }
+                //Setzt pl auf 0, damit die Runde vorn beginnt
+                if (pl + 1 == player.length) {
+                    pl = 0;
+
+                }
+
+            }
+            setRoundNumber();
+        }
+        
+        printWinner(player);
+
+    }
+	*/
 }

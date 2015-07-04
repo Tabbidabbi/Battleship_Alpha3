@@ -11,132 +11,171 @@ import IO.IO;
 import Gameobjects.Player.Player;
 
 /**
- *
+ * 
  * @author Tobias
  */
 public class Helper {
 
-    static int input;
+	static int input;
 
-    /**
-     *
-     * @param message Hint
-     * @param min Minimum Value
-     * @param max Maximum Value
-     * @return
+	/**
+	 * 
+	 * @param message
+	 *            Hint
+	 * @param min
+	 *            Minimum Value
+	 * @param max
+	 *            Maximum Value
+	 * @return
+	 */
+	public static int checkUserInput(String message, int min, int max) {
+		boolean error = false;
+		do {
+			IO.println(message);
+			input = IO.readInt();
+			if (input < min || input > max) {
+				IO.println("Eingabe, außerhalb des gültigen Bereiches (" + min
+						+ "-" + max + ")");
+				error = true;
+			} else {
+				error = false;
+
+			}
+		} while (error);
+		return input;
+	}
+
+	public static int checkUserInput(int min, int max) {
+		boolean error = false;
+		do {
+			input = IO.readInt();
+			if (input < min || input > max) {
+				IO.println("Eingabe, außerhalb des gültigen Bereiches (" + min
+						+ "-" + max + ")");
+				error = true;
+			} else {
+				error = false;
+
+			}
+		} while (error);
+		return input;
+	}
+
+	public static boolean checkOrientation() {
+		boolean orientation = false;
+		boolean error = false;
+		do {
+			IO.print("Bitte geben Sie die Ausrichtung des Schiffes an (h = horizontal, v = vertical: ");
+			String o = IO.readString();
+			if (o.equals("h")) {
+				error = false;
+				orientation = true;
+			} else if (o.equals("v")) {
+				error = false;
+				orientation = false;
+			} else {
+				IO.println("Falsche Eingabe, bitte wiederholen Sie die Eingabe!");
+				error = true;
+			}
+		} while (error);
+
+		return orientation;
+	}
+
+	/**
+	 * Wählt eine zufällige Koorindate auf dem Spielfeld aus
+	 * 
+	 * @param playerList
+	 *            ArrayList vom Typ Player
+	 * @param playerNumber
+	 *            Index des aktuellen Spielers
+	 * @return coordinate Koordinate vom Type String
+	 */
+	public static String aiChooseCoordinate(
+			ArrayList<Gameobjects.Player.Player> playerList, int playerNumber) {
+		boolean error = false;
+		String coordinateInput = null;
+		do {
+
+			int Coordinate = getAiYCoordinate(playerList, playerNumber);
+			String yCoordinate = Integer.toString(Coordinate);
+			String xCoordinate = getAiXCoordinate(playerList, playerNumber);
+			coordinateInput = yCoordinate + xCoordinate;
+			// Prueft, ob Koordinate getroffen
+			for (int i = 0; i < playerList.get(playerNumber).getPlayfield()
+					.getFieldMatrix().length; i++) {
+				for (int j = 0; j < playerList.get(playerNumber).getPlayfield()
+						.getFieldMatrix()[i].length; j++) {
+					if (coordinateInput == playerList.get(playerNumber)
+							.getPlayfield().getFieldMatrix()[i][j]
+							.getFieldNumber()
+							&& playerList.get(playerNumber).getPlayfield()
+									.getFieldMatrix()[i][j].getIsHit() == true) {
+
+						error = true;
+
+					}
+				}
+
+			}
+		} while (error);
+		// Koordinate
+
+		// R�ckgabewert Koordinate
+		return coordinateInput;
+	}
+
+	public static int getAiYCoordinate(
+			ArrayList<Gameobjects.Player.Player> playerList, int playerNumber) {
+
+		// Range der Zufallszahlen
+		int pool = playerList.get(playerNumber).getPlayfield().getFieldMatrix().length - 1;
+		// Zufallszahl zwischen
+		return (int) (Math.random() * pool) + 1;
+	}
+
+	public static String getAiXCoordinate(
+			ArrayList<Gameobjects.Player.Player> playerList, int playerNumber) {
+		// char 97-122 = abc.....
+		String coordinate;
+		int randomNumber = 0;
+		int endOfRange = playerList.get(playerNumber).getPlayfield()
+				.getFieldMatrix().length + 96;
+		while (randomNumber < 97) {
+			randomNumber = (int) (Math.random() * endOfRange);
+		}
+		char letter = (char) randomNumber;
+		coordinate = Character.toString(letter);
+		return coordinate;
+	}
+
+	public static boolean chooseAiOrientation() {
+		boolean error;
+		boolean orientation = false;
+		int orient = (int) (Math.random() * 2) + 1;
+		if (orient == 1) {
+			error = false;
+			orientation = true;
+		} else {
+			error = false;
+			orientation = false;
+		}
+		return orientation;
+	}
+	
+	/**
+     * Gibt Summe der noch im Spiel befindenen Spieler zurueck
+     * @param player Spielerarray
+     * @return Summe der noch im Spiel befindenen Spieler
      */
-    public static int checkUserInput(String message, int min, int max) {
-        boolean error = false;
-        do {
-            IO.println(message);
-            input = IO.readInt();
-            if (input < min || input > max) {
-                IO.println("Eingabe, außerhalb des gültigen Bereiches (" + min + "-" + max + ")");
-                error = true;
-            } else {
-                error = false;
-
+    public int checkAmountOfAvailablePlayers(ArrayList<Player> playerList) {
+        int result = 0;
+        for (int i = 0; i < playerList.size(); i++) {
+            if (playerList.get(i).getisLost() == false) {
+                result++;
             }
-        } while (error);
-        return input;
-    }
-    
-    public static int checkUserInput(int min, int max) {
-        boolean error = false;
-        do {
-            input = IO.readInt();
-            if (input < min || input > max) {
-                IO.println("Eingabe, außerhalb des gültigen Bereiches (" + min + "-" + max + ")");
-                error = true;
-            } else {
-                error = false;
+        }
+        return result;
 
-            }
-        } while (error);
-        return input;
-    }
-     
-    public static boolean checkOrientation() {
-        boolean orientation = false;
-        boolean error = false;
-        do {
-            IO.print("Bitte geben Sie die Ausrichtung des Schiffes an (h = horizontal, v = vertical: ");
-            String o = IO.readString();
-            if (o.equals("h")) {
-                error = false;
-                orientation = true;
-            } else if (o.equals("v")) {
-                error = false;
-                orientation = false;
-            } else {
-                IO.println("Falsche Eingabe, bitte wiederholen Sie die Eingabe!");
-                error = true;
-            }
-        } while (error);
-
-        return orientation;
-    }
-    
-    public static String aiChooseCoordinate(ArrayList<Gameobjects.Player.Player> playerList, int playerNumber){
-    	boolean error = false;
-    	String coordinateInput = null;
-    	do{
-    		
-    		int Coordinate = getAiYCoordinate(playerList, playerNumber);
-        	String yCoordinate = Integer.toString(Coordinate);
-        	String xCoordinate = getAiXCoordinate(playerList, playerNumber);
-        	coordinateInput = yCoordinate + xCoordinate;
-        	//Prueft, ob Koordinate getroffen
-        	for(int i = 0; i < playerList.get(playerNumber).getPlayfield().getFieldMatrix().length; i++){
-        		for(int j = 0; j < playerList.get(playerNumber).getPlayfield().getFieldMatrix()[i].length; j++){
-        			if(coordinateInput == playerList.get(playerNumber).getPlayfield().getFieldMatrix()[i][j].getFieldNumber() && 
-        					playerList.get(playerNumber).getPlayfield().getFieldMatrix()[i][j].getIsHit() == true){
-        				
-        				error = true;
-        				
-        			}
-        		}
-        		
-        	}
-    	}while (error);
-    	//Koordinate
-    	
-    	//R�ckgabewert Koordinate
-    	return coordinateInput;
-    }
-    
-    public static int getAiYCoordinate(ArrayList<Gameobjects.Player.Player> playerList, int playerNumber){
-    	
-    	//Range der Zufallszahlen
-    	int pool = playerList.get(playerNumber).getPlayfield().getFieldMatrix().length - 1;
-    	//Zufallszahl zwischen
-    	return (int)(Math.random() * pool) + 1;
-    }
-    
-    public static String getAiXCoordinate(ArrayList<Gameobjects.Player.Player> playerList, int playerNumber){
-    	//char 97-122 = abc.....
-    	String coordinate;
-    	int randomNumber = 0;
-    	int endOfRange = playerList.get(playerNumber).getPlayfield().getFieldMatrix().length + 96;
-    	while(randomNumber < 97) {
-    		randomNumber = (int)(Math.random() * endOfRange);
-    	}
-    	char letter = (char) randomNumber;
-    	coordinate = Character.toString(letter);
-    	return coordinate;
-    }
-    
-    public static boolean chooseAiOrientation(){
-    	boolean error;
-    	boolean orientation = false;
-            int orient = (int)(Math.random() * 2) + 1;
-    	if(orient == 1){
-    		error = false;
-                   	orientation = true;	
-    	} else{
-                   	error = false;
-                   	orientation = false;
-            } 
-            return orientation;
     }
 }
