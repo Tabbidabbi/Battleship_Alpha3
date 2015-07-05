@@ -30,8 +30,8 @@ public class Player {
 
     private boolean isAI;
 
-    public Player(int number) {
-//        this.name = name;
+    public Player(int numbern, String name) {
+        this.name = name;
         this.gameSettings = Settings.getGameSettings();
         this.number = number;
         buildShipArray(gameSettings);

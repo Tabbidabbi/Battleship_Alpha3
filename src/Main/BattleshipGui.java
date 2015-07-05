@@ -26,7 +26,7 @@ public class BattleshipGui extends JFrame {
 
     public BattleshipGui() {
         setTitle("Battleship");
-        setBounds(450, 50, 1024, 768);
+        setExtendedState(MAXIMIZED_BOTH);
         setContentPane(backgroundImagePanel = new BackgroundImagePanel("G:\\hs\\Prog2\\Battleship_Alpha2\\Images\\background.jpg"));
 
         menuHandler = new MenuHandler();

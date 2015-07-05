@@ -48,8 +48,8 @@ public class Game {
     private void buildPlayerArray() {
         this.playerList = new ArrayList<>();
         int playerNumber = 1;
-        for (int i = 1; i <= gameSettings.getAmountOfPlayer(); i++) {
-            Player player = new Player(playerNumber);
+        for (int i = 0; i < gameSettings.getAmountOfPlayer(); i++) {
+            Player player = new Player(playerNumber, gameSettings.getPlayerNames()[i]);
             playerList.add(player);
             playerNumber++;
 

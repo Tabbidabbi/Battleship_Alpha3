@@ -41,7 +41,7 @@ public class GameGui extends JPanel {
     
 
     JLabel playerListLabel;
-    JTextArea playerListArea;
+    JButton[] playerButton;
     JPanel playerListPanel;
 
     JTextArea textOutputArea;
@@ -59,16 +59,15 @@ public class GameGui extends JPanel {
     private PrintStream standardOut;
 
     public GameGui() {
-//        setPreferredSize(new Dimension(1024, 768));
+        setPreferredSize(new Dimension(1200, 800));
         game = new Game();
-//        setOpaque(false);
-//        gridBagLayout = new GridBagLayout();
-//        gbc = new GridBagConstraints();
-//        setLayout(gridBagLayout);
+        setOpaque(false);
         boxLayout = new BoxLayout(this, BoxLayout.Y_AXIS);
         setLayout(boxLayout);
         
         playerPlayFieldPanel = new JPanel();
+        playerPlayFieldPanel.setPreferredSize(new Dimension(800, 500));
+        playerPlayFieldPanel.setOpaque(false);
         playerPlayFieldArray = new JPanel[Settings.getGameSettings().getAmountOfPlayer()];
         for (int i = 0; i < game.getPlayerList().size();i++) {
             playerPlayFieldArray[i] = game.getPlayerList().get(i).getPlayerPlayFieldGui();
@@ -76,18 +75,19 @@ public class GameGui extends JPanel {
         
         playerPlayFieldPanel.add(playerPlayFieldArray[0]);
             
-//        gbc.gridwidth = GridBagConstraints.REMAINDER;
-//        gridBagLayout.setConstraints(playerPlayFieldPanel, gbc);
-
         playerListLabel = new JLabel("Spieler: ");
-        playerListArea = new JTextArea(10, 10);
         playerListPanel = new JPanel();
-        playerListPanel.setLayout(new BoxLayout(playerListPanel, BoxLayout.Y_AXIS));
         playerListPanel.add(playerListLabel);
-        playerListPanel.add(playerListArea);
-//        playerListPanel.setPreferredSize(new Dimension(150, 250));
+        playerListPanel.setLayout(new BoxLayout(playerListPanel, BoxLayout.Y_AXIS));
+        playerButton = new JButton[Settings.getGameSettings().getAmountOfPlayer()];
+        for (int i = 0; i < playerButton.length; i++) {
+            playerButton[i] = new JButton(game.getPlayerList().get(i).getName());
+            playerListPanel.add(playerButton[i]);
+        }
+        playerListPanel.setPreferredSize(new Dimension(200, 150));
 
         textOutputArea = new JTextArea(10, 35);
+        textOutputArea.setPreferredSize(new Dimension(400, 150));
         textOutputArea.setEditable(false);
         PrintStream printStream = new PrintStream(new CustomOutputStream(textOutputArea));
         standardOut = System.out;
@@ -95,26 +95,6 @@ public class GameGui extends JPanel {
         System.setErr(printStream);
         printStream.println("Hallo Welt");
 
-
-        textOutputPanel = new JPanel();
-        textOutputPanel.add(textOutputArea);
-//        textOutputPanel.setPreferredSize(new Dimension(450, 250));
-
-        shipListLabel = new JLabel("Schiffe: ");
-        shipListArea = new JTextArea(10, 10);
-        shipListPanel = new JPanel();
-        shipListPanel.setLayout(new BoxLayout(shipListPanel, BoxLayout.Y_AXIS));
-        shipListPanel.add(shipListLabel);
-        shipListPanel.add(shipListArea);
-//        shipListPanel.setPreferredSize(new Dimension(150, 250));
-        
-        
-        componentPanel = new JPanel();
-        componentPanel.setLayout(new BoxLayout(componentPanel, BoxLayout.X_AXIS));
-        componentPanel.add(playerListPanel);
-        componentPanel.add(textOutputPanel);
-        componentPanel.add(shipListPanel);
-        
         menuButton = new JButton("Hauptmenü");
         menuButton.setActionCommand("Game-MainMenu");
         menuButton.setFont(new Font("Serif", 10, 13));
@@ -129,10 +109,31 @@ public class GameGui extends JPanel {
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
         buttonPanel.add(menuButton);
         buttonPanel.add(saveGameButton);
+
+        textOutputPanel = new JPanel();
+        textOutputPanel.setLayout(new BoxLayout(textOutputPanel, BoxLayout.Y_AXIS));
+        textOutputPanel.add(textOutputArea);
+        textOutputPanel.add(buttonPanel);
+
+        shipListLabel = new JLabel("Schiffe: ");
+        shipListArea = new JTextArea(10, 10);
+        shipListPanel = new JPanel();
+        shipListPanel.setLayout(new BoxLayout(shipListPanel, BoxLayout.Y_AXIS));
+        shipListPanel.add(shipListLabel);
+        shipListPanel.add(shipListArea);
+//        shipListPanel.setPreferredSize(new Dimension(150, 250));
+        
+        
+        componentPanel = new JPanel();
+        componentPanel.setPreferredSize(new Dimension(800, 300));
+        componentPanel.setLayout(new BoxLayout(componentPanel, BoxLayout.X_AXIS));
+        componentPanel.add(playerListPanel);
+        componentPanel.add(textOutputPanel);
+        componentPanel.add(shipListPanel);
+        
         
         add(playerPlayFieldPanel);
         add(componentPanel);
-        add(buttonPanel);
 
         setVisible(true);
     }

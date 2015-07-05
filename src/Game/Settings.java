@@ -8,6 +8,8 @@ public class Settings {
     private static final Settings SETTINGS = new Settings();
 
     private int amountOfPlayer;
+    
+    private String[] playerNames;
 
     private int amountOfKIPlayer;
     
@@ -34,6 +36,10 @@ public class Settings {
 
     public Settings() {
         this.amountOfPlayer = 2;
+        playerNames = new String[6];
+        for (int i = 0; i < playerNames.length; i++) {
+            playerNames[i] = "Spieler" + (i + 1);
+        }
         this.amountOfKIPlayer = 0;
         this.amountOfDestroyer = 1;
         this.amountOfFrigate = 1;
@@ -42,6 +48,17 @@ public class Settings {
         calculateMinPlayfieldSize();
     }
 
+    public String[] getPlayerNames() {
+        return playerNames;
+    }
+
+    public void setPlayerNames(String[] playerNames) {
+        this.playerNames = playerNames;
+    }
+
+
+
+    
     //Instanzvariable ki spieler und im menu ki abfrage
     
     

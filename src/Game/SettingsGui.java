@@ -85,7 +85,7 @@ public class SettingsGui extends JPanel {
         playerPanel.setPreferredSize(new Dimension(250, 150));
         playerPanel.setLayout(new BoxLayout(playerPanel, BoxLayout.Y_AXIS));
         for (int i = 0; i < playerTextFields.length; i++) {
-            playerTextFields[i] = new JTextField("Spieler" + (i + 1), 10);
+            playerTextFields[i] = new JTextField("Spieler" + (i + 1) ,10);
             playerTextFields[i].addActionListener(new PlayerTextFieldHandler());
             singlePlayerPanel[i] = new JPanel();
             kiCheckboxes[i] = new JCheckBox("KI");
@@ -152,7 +152,7 @@ public class SettingsGui extends JPanel {
         buttonPanel.add(Box.createHorizontalGlue());
 
         backPanel = new JPanel();
-        backPanel.setPreferredSize(new Dimension(800, 600));
+        backPanel.setPreferredSize(new Dimension(1200, 800));
         backPanel.setLayout(new BoxLayout(backPanel, BoxLayout.Y_AXIS));
         backPanel.add(headerPanel);
         backPanel.add(categoriePanel);
@@ -260,12 +260,12 @@ public void setGameSettings(Settings gamesettings) {
             String [] textFieldInput = new String[6];
             
             
-//            for (int i = 0; i < gameSettings.getAmountOfPlayer(); i++) {
-//                textFieldInput[i] = playerTextFields[i].getName();
-//                gameSettings.getPlayerList().get(i).setName(textFieldInput[i]);
-//                
-//                
-//            }
+            for (int i = 0; i < gameSettings.getAmountOfPlayer(); i++) {
+                textFieldInput[i] = playerTextFields[i].getText();
+//                gameSettings.setPlayerNames(textFieldInput[i]);
+                
+                
+            }
 //            String textField1 = playerTextFields[0].getText();
 //            String textField2 = playerTextFields[1].getText();
 //            String textField3 = playerTextFields[2].getText();
