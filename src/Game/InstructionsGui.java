@@ -35,7 +35,7 @@ public class InstructionsGui extends JPanel{
         instructionsTextArea.setEditable(false);
         
         backButton = new JButton("Hauptmenü");
-        backButton.setActionCommand("InstructionsMainMenuButton");
+        backButton.setActionCommand("Instructions-MainMenuButton");
         
         
         instructionsPanel = new JPanel();
@@ -67,7 +67,7 @@ public class InstructionsGui extends JPanel{
         
     }
     
-     public void setInstructionsButtonListener(ActionListener l) {
+     public void setListener(ActionListener l) {
         this.backButton.addActionListener(l);
     }
     

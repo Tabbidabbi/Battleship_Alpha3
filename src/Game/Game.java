@@ -9,6 +9,7 @@ import Helper.Helper;
 
 public class Game {
 
+    
     private ArrayList<Player> playerList;
 
     private ArrayList<Ship> shipList;
@@ -19,27 +20,36 @@ public class Game {
 
     private boolean shipOrientation;
 
-    private Settings currentGameSettings;
+    private Settings gameSettings;
 
     private int amountOfPlayer;
 
     private boolean error;
 
-    public Game(Settings settings) {
-        this.currentGameSettings = settings;
+    public Game() {
+        this.gameSettings = Settings.getGameSettings();
         IO.println("Willkommen beim Spiel Schiffeversenken!!!");
         buildPlayerArray();
-        placeAllShips();
+//        placeAllShips();
 
+    }
+
+
+
+    
+    public ArrayList<Player> getPlayerList() {
+        return playerList;
+    }
+
+    public void setPlayerList(ArrayList<Player> playerList) {
+        this.playerList = playerList;
     }
 
     private void buildPlayerArray() {
         this.playerList = new ArrayList<>();
         int playerNumber = 1;
-        for (int i = 1; i <= currentGameSettings.getAmountOfPlayer(); i++) {
-            IO.print("Spieler " + (i) + " - Geben Sie ihren Namen ein: ");
-            String name = IO.readString();//Einlesen des Spielernamens
-            Player player = new Player(playerList, currentGameSettings, name, playerNumber);
+        for (int i = 1; i <= gameSettings.getAmountOfPlayer(); i++) {
+            Player player = new Player(playerNumber);
             playerList.add(player);
             playerNumber++;
 

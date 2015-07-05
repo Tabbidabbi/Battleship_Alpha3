@@ -1,6 +1,11 @@
 package Game;
 
+import Gameobjects.Player.Player;
+import java.util.ArrayList;
+
 public class Settings {
+    
+    private static final Settings SETTINGS = new Settings();
 
     private int amountOfPlayer;
 
@@ -15,6 +20,7 @@ public class Settings {
     private int amountOfSubmarine;
 
     private int playfieldSize;
+    
     
        // Konstanten
     final int SIZE_DESTRIOYER = 5;
@@ -35,16 +41,13 @@ public class Settings {
         this.amountOfSubmarine = 2;
         calculateMinPlayfieldSize();
     }
-    
-    
-    
-
-
 
     //Instanzvariable ki spieler und im menu ki abfrage
     
     
-    
+    public static Settings getGameSettings() {
+        return SETTINGS;
+    }
     
     public int getAmountOfPlayer() {
         return amountOfPlayer;
@@ -105,12 +108,12 @@ public class Settings {
     }
 
     public void setPlayfieldSize(int playfieldSize) {
-        this.playfieldSize = playfieldSize;
-        if (this.playfieldSize < MIN_PLAYFIELD_SIZE) {
+        if (playfieldSize < MIN_PLAYFIELD_SIZE) {
             this.playfieldSize = MIN_PLAYFIELD_SIZE;
-        } else if (this.playfieldSize > MAX_PLAYFIELD_SIZE) {
+        } else if (playfieldSize > MAX_PLAYFIELD_SIZE) {
             this.playfieldSize = MAX_PLAYFIELD_SIZE;
         }
+        this.playfieldSize = playfieldSize;
         
     }
     

@@ -5,26 +5,40 @@
  */
 package Game;
 
+import Gameobjects.Player.Player;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.*;
 import Gameobjects.Playfield.*;
+import Main.BattleshipGui_old;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
-
+import Main.BattleshipGui_old;
+import Main.MenuHandler;
 /**
  *
  * @author Tobias
  */
 public class GameGui extends JPanel {
 
-    GridBagLayout gridBagLayout;
-    GridBagConstraints gbc;
+    
+    
+//    GridBagLayout gridBagLayout;
+//    GridBagConstraints gbc;
+    
+    BoxLayout boxLayout;
 
-    PlayerPlayfieldGui playerPlayFieldPanel;
+    JPanel playerPlayFieldPanel;
+    JPanel[] playerPlayFieldArray;
+    
+    
+    Game game;
+    
+    Settings gameSettings;
+    
 
     JLabel playerListLabel;
     JTextArea playerListArea;
@@ -36,6 +50,8 @@ public class GameGui extends JPanel {
     JLabel shipListLabel;
     JTextArea shipListArea;
     JPanel shipListPanel;
+    
+    JPanel componentPanel;
 
     JButton menuButton, saveGameButton;
     JPanel buttonPanel;
@@ -43,22 +59,33 @@ public class GameGui extends JPanel {
     private PrintStream standardOut;
 
     public GameGui() {
-        setPreferredSize(new Dimension(1024, 768));
-        setOpaque(false);
-        gridBagLayout = new GridBagLayout();
-        gbc = new GridBagConstraints();
-        setLayout(gridBagLayout);
-
-        playerPlayFieldPanel = new PlayerPlayfieldGui();
-        gbc.gridwidth = GridBagConstraints.REMAINDER;
-        gridBagLayout.setConstraints(playerPlayFieldPanel, gbc);
+//        setPreferredSize(new Dimension(1024, 768));
+        game = new Game();
+//        setOpaque(false);
+//        gridBagLayout = new GridBagLayout();
+//        gbc = new GridBagConstraints();
+//        setLayout(gridBagLayout);
+        boxLayout = new BoxLayout(this, BoxLayout.Y_AXIS);
+        setLayout(boxLayout);
+        
+        playerPlayFieldPanel = new JPanel();
+        playerPlayFieldArray = new JPanel[Settings.getGameSettings().getAmountOfPlayer()];
+        for (int i = 0; i < game.getPlayerList().size();i++) {
+            playerPlayFieldArray[i] = game.getPlayerList().get(i).getPlayerPlayFieldGui();
+        }
+        
+        playerPlayFieldPanel.add(playerPlayFieldArray[0]);
+            
+//        gbc.gridwidth = GridBagConstraints.REMAINDER;
+//        gridBagLayout.setConstraints(playerPlayFieldPanel, gbc);
 
         playerListLabel = new JLabel("Spieler: ");
         playerListArea = new JTextArea(10, 10);
         playerListPanel = new JPanel();
+        playerListPanel.setLayout(new BoxLayout(playerListPanel, BoxLayout.Y_AXIS));
         playerListPanel.add(playerListLabel);
         playerListPanel.add(playerListArea);
-        playerListPanel.setPreferredSize(new Dimension(150, 250));
+//        playerListPanel.setPreferredSize(new Dimension(150, 250));
 
         textOutputArea = new JTextArea(10, 35);
         textOutputArea.setEditable(false);
@@ -68,6 +95,26 @@ public class GameGui extends JPanel {
         System.setErr(printStream);
         printStream.println("Hallo Welt");
 
+
+        textOutputPanel = new JPanel();
+        textOutputPanel.add(textOutputArea);
+//        textOutputPanel.setPreferredSize(new Dimension(450, 250));
+
+        shipListLabel = new JLabel("Schiffe: ");
+        shipListArea = new JTextArea(10, 10);
+        shipListPanel = new JPanel();
+        shipListPanel.setLayout(new BoxLayout(shipListPanel, BoxLayout.Y_AXIS));
+        shipListPanel.add(shipListLabel);
+        shipListPanel.add(shipListArea);
+//        shipListPanel.setPreferredSize(new Dimension(150, 250));
+        
+        
+        componentPanel = new JPanel();
+        componentPanel.setLayout(new BoxLayout(componentPanel, BoxLayout.X_AXIS));
+        componentPanel.add(playerListPanel);
+        componentPanel.add(textOutputPanel);
+        componentPanel.add(shipListPanel);
+        
         menuButton = new JButton("Hauptmenü");
         menuButton.setActionCommand("Game-MainMenu");
         menuButton.setFont(new Font("Serif", 10, 13));
@@ -82,27 +129,17 @@ public class GameGui extends JPanel {
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
         buttonPanel.add(menuButton);
         buttonPanel.add(saveGameButton);
-
-        textOutputPanel = new JPanel();
-        textOutputPanel.add(textOutputArea);
-        textOutputPanel.add(buttonPanel);
-        textOutputPanel.setPreferredSize(new Dimension(450, 250));
-
-        shipListLabel = new JLabel("Schiffe: ");
-        shipListArea = new JTextArea(10, 10);
-        shipListPanel = new JPanel();
-        shipListPanel.add(shipListLabel);
-        shipListPanel.add(shipListArea);
-        shipListPanel.setPreferredSize(new Dimension(150, 250));
-
+        
         add(playerPlayFieldPanel);
-        add(playerListPanel);
-        add(textOutputPanel);
-        add(shipListPanel);
+        add(componentPanel);
+        add(buttonPanel);
 
         setVisible(true);
     }
-    
+    public void setGame(Game game) {
+        this.game = game;
+    }
+     
      public void setGameButtonListener(ActionListener l) {
         this.menuButton.addActionListener(l);
         this.saveGameButton.addActionListener(l);

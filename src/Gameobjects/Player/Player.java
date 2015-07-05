@@ -6,10 +6,12 @@ import Gameobjects.Ships.*;
 import IO.IO;
 import java.util.ArrayList;
 import Game.Game;
+import Gameobjects.Playfield.PlayerPlayfieldGui;
 
 public class Player {
     
     
+    Settings gameSettings;
     private int input;
     
     private int number;
@@ -20,6 +22,7 @@ public class Player {
 
 //    Settings settings = new Settings();
     private Playfield playfield;
+    private PlayerPlayfieldGui playerPlayFieldGui;
 
     private Playfield opponentField;
 
@@ -27,13 +30,24 @@ public class Player {
 
     private boolean isAI;
 
-    public Player(ArrayList<Player> playerList,Settings currentGameSettings, String name, int number) {
-        this.name = name;
+    public Player(int number) {
+//        this.name = name;
+        this.gameSettings = Settings.getGameSettings();
         this.number = number;
-        buildShipArray(currentGameSettings);
-        playfield = new Playfield(currentGameSettings.getPlayfieldSize(),currentGameSettings.getPlayfieldSize());
-        playfield.printPlayField();
-        opponentField = new Playfield(currentGameSettings.getPlayfieldSize(),currentGameSettings.getPlayfieldSize());
+        buildShipArray(gameSettings);
+        this.playerPlayFieldGui = new PlayerPlayfieldGui();
+//        playfield = new Playfield(gameSettings.getPlayfieldSize(),gameSettings.getPlayfieldSize());
+//        playfield.printPlayField();
+//        opponentField = new Playfield(gameSettings.getPlayfieldSize(),gameSettings.getPlayfieldSize());
+    }
+    
+
+    public PlayerPlayfieldGui getPlayerPlayFieldGui() {
+        return playerPlayFieldGui;
+    }
+
+    public void setPlayerPlayFieldGui(PlayerPlayfieldGui playerPlayFieldGui) {
+        this.playerPlayFieldGui = playerPlayFieldGui;
     }
     
     private void buildShipArray(Settings cSettings) {
