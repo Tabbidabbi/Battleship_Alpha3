@@ -27,14 +27,22 @@ public class HelperOrientationDialog extends JDialog implements ActionListener {
 	private ButtonGroup group;
 	private String result;
 	
+	/**
+	 * Konstuktor
+	 * @param String message
+	 */
 	public HelperOrientationDialog(String message){
 		super();
 		
 		this.message = message;
 		
+		//Setzt Titel des Windows
 		setTitle("Auswahl");
+		//Fenster kann nicht skaliert werden
 		setResizable(false);
+		//Fenster bleibt im Vordergrund
 		setModal(true);
+		//Setzt Layout
 		this.setLayout(new GridLayout(3,1));
 			
 		//Panels
@@ -46,7 +54,7 @@ public class HelperOrientationDialog extends JDialog implements ActionListener {
 		//WindowPanel
 		windowPanel.setLayout(new BoxLayout(windowPanel, BoxLayout.Y_AXIS));
 		
-		// MessagePane
+		// MessagePanel
 		JLabel label = new JLabel(this.message);
 		add(label);
 		windowPanel.add(messagePanel);

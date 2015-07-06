@@ -20,7 +20,7 @@ public class Client {
 		Scanner eingabe = new Scanner(System.in);
 		
 		try{
-			
+			//Erstellt Socket
 			Socket client = new Socket("localhost", 5555);
 			IO.println("Client gestartet");
 			

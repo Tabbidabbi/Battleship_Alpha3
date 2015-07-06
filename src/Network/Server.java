@@ -19,6 +19,7 @@ public class Server {
 	public static void main(String[] args){
 		
 		try{
+			//Erstellt ServerSocket
 			//5555 ist der Port
 			ServerSocket server = new ServerSocket(5555);
 			IO.println("Server gestartet");

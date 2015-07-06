@@ -16,7 +16,7 @@ import SaveLoad.SaveLoad;
 public class Game implements Serializable {
 
     /**
-     *
+     * 
      */
     private static final long serialVersionUID = -4356896699088096722L;
 
@@ -39,7 +39,11 @@ public class Game implements Serializable {
     private int roundNumber = 1;
 
     GameGui gameGui;
-
+    
+    /**
+     * Konstruktor der Klasse Game
+     * @param gameSettings Einstellungen zum Erstellen des Spiels
+     */
     public Game(Settings gameSettings) {
         this.gameSettings = gameSettings;
         this.playerList = buildPlayerArray(gameSettings);
@@ -48,18 +52,35 @@ public class Game implements Serializable {
 //        placeAllShips();
     }
 
+    /**
+     * Gibt gameGui zurück
+     * @return GameGui gameGui
+     */
     public GameGui getGameGui() {
         return gameGui;
     }
 
+    /**
+     * Gibt gameSettings zurück
+     * @return Settings gameSettings
+     */
     public Settings getGameSettings() {
         return gameSettings;
     }
 
+    /**
+     * Gibt ArrayList vom Typ Player
+     * @return ArrayList<Player> playerList
+     */
     public ArrayList<Player> getPlayerList() {
         return playerList;
     }
 
+    /**
+     * Erstellt die Spieler
+     * @param Settings gameSettings
+     * @return ArrayList<Player> playerList
+     */
     private ArrayList buildPlayerArray(Settings gameSettings) {
         this.playerList = new ArrayList<>();
         int playerNumber = 1;
@@ -72,6 +93,9 @@ public class Game implements Serializable {
         return playerList;
     }
 
+    /**
+     * Platziert alle Schiffe
+     */
     private void placeAllShips() {
         error = false;
 
@@ -151,6 +175,15 @@ public class Game implements Serializable {
         }
     }
 
+    /**
+     * Setzt Schiffe
+     * @param ship Schiffobjet
+     * @param input Koordinate zum Setzen
+     * @param orientation Richtung des Schiffes
+     * @param playfield Spielfeld des auf Sicht des Spielers
+     * @param opponentfield playfield Spielfeld des auf Sicht des Gegners
+     * @return boolean, ob Schiff gesetzt werden konnte 
+     */
     public boolean placeShip(Ship ship, String input, boolean orientation,
             Playfield playfield, Playfield opponentfield) {
 
@@ -292,7 +325,11 @@ public class Game implements Serializable {
 
         return true;
     }
-
+    
+    /**
+     * Spielrunden beginnen
+     * @param Übergebeparameter ArrayList<> playerList
+     */
     public void playRounds(ArrayList<Player> playerList) {
 		// Runden beginnen
         // Solange es mehr als einen spieler gibt, wird diese Schleife
@@ -397,9 +434,12 @@ public class Game implements Serializable {
                 }
 
             }
+            //Rundennummer wird einen hochgesetzt
             this.roundNumber++;
+            // Speichert das Spiel
             SaveLoad.save(this);
         }
+        //Gibt es Gewinner aus
         Helper.printWinner(playerList);
     }
 }

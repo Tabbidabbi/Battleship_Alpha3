@@ -27,15 +27,21 @@ public class Playfield implements Serializable{
     private int counterJ;
 
     private String convertInString;
-
+    
+    /**
+     * Konstruktor für Playfield
+     * @param int xCoordinate
+     * @param int yCoordinate
+     */
     public Playfield(int xCoordinate, int yCoordinate) {
         createPlayfield(xCoordinate,yCoordinate);
     }
-    
-    
-    
-    
-    
+       
+    /**
+     * Erstellt das Spielfeld
+     * @param int x
+     * @param int y
+     */
     private void createPlayfield(int x,int y) {
         this.fieldMatrix = new Field[x + 1][y +1];
 //        Hier wird jeder Zeile ein Buchstabe aus dem "alphabet" String hinzugefügt bis die Länge des Arrays erreicht wurde.
@@ -60,6 +66,13 @@ public class Playfield implements Serializable{
         
     }
     
+    /**
+     * Setzt Schuss aufs Spielfeld
+     * @param String coordinate
+     * @param int shootRange
+     * @param boolean orientation
+     * @return hitShips int-Array mit Anzahl der getroffenen Schiffe
+     */
     public int[] setShot(String coordinate, int shootRange, boolean orientation) {
         //Array, in dem  die getroffenen Schiffe stehen
         int[] hitShips = new int[shootRange];
@@ -97,7 +110,9 @@ public class Playfield implements Serializable{
         return hitShips;
     }
     
-        //Wie sieht das PlayField aus
+    /**
+     * Gibt das Spielfeld aus der Spielersicht aus
+     */
     public void printPlayField() {
         for (int i = 0; i < fieldMatrix.length; i++) {
             //Das Array wird auf der Position [0][0] vertikal mit Zahlen gefüllt2
@@ -118,7 +133,9 @@ public class Playfield implements Serializable{
         IO.println("");
     }
 
-    //Wie sieht das OpponentField aus
+    /**
+     * Gibt das Spielfeld aus der Gegnersicht aus
+     */
     public void printOpponentField() {
         for (int i = 0; i < fieldMatrix.length; i++) {
             if (i + 1 < fieldMatrix.length) {
@@ -137,22 +154,36 @@ public class Playfield implements Serializable{
         IO.println("");
     }
 
+    /**
+     * Gibt Feldnummer zurück
+     * @return String fieldNumber
+     */
     public String getFieldNumber() {
         return fieldNumber;
     }
 
+    /**
+     * Setzt Feldnummer
+     * @param String fieldNumber
+     */
     public void setFieldNumber(String fieldNumber) {
         this.fieldNumber = fieldNumber;
     }
-
+    
+    /**
+     * Gibt Spielfeld zurück
+     * @return Field[][] fieldMatrix
+     */
     public Field[][] getFieldMatrix() {
         return fieldMatrix;
     }
 
+    /**
+     * Setzt Spielfeld
+     * @param Field[][] fieldMatrix
+     */
     public void setFieldMatrix(Field[][] fieldMatrix) {
         this.fieldMatrix = fieldMatrix;
     }
-    
-    
 }
 

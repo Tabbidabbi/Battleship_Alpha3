@@ -27,14 +27,23 @@ public class HelperMultipleChoiceDialog extends JDialog implements ActionListene
 	private ButtonGroup group;
 	private String result;
 	
+	/**
+	 * Konstuktor
+	 * @param String[] array
+	 * @param String message
+	 */
 	public HelperMultipleChoiceDialog(String[] array, String message){
 		super();
 		this.array = array;
 		this.message = message;
 		
+		//Setzt Titel des Windows
 		setTitle("Auswahl");
+		//Fenster kann nicht skaliert werden
 		setResizable(false);
+		//Fenster bleibt im Vordergrund
 		setModal(true);
+		//Setzt Layout
 		this.setLayout(new GridLayout(3,1));
 		
 		//Panels
@@ -49,6 +58,7 @@ public class HelperMultipleChoiceDialog extends JDialog implements ActionListene
 		
 		// MessagePanel
 		messagePanel.setBorder(null);
+		//Erstellt JLabel
 		JLabel label = new JLabel(this.message, SwingConstants.CENTER);
 		add(label);
 		windowPanel.add(messagePanel);
@@ -56,6 +66,7 @@ public class HelperMultipleChoiceDialog extends JDialog implements ActionListene
 		//RadioButtons
 		this.radioButtons = new JRadioButton[this.array.length]; 
 		this.group = new ButtonGroup();
+		//Erstllt RadioButtons
 		for(int counter = 0; counter < this.array.length; counter++){
 			this.radioButtons[counter] = new JRadioButton();
 			this.radioButtons[counter].setBorder(null);
@@ -79,7 +90,7 @@ public class HelperMultipleChoiceDialog extends JDialog implements ActionListene
 		final int x = (screenSize.width - getWidth()) / 2;
 		final int y = (screenSize.height - getHeight()) / 2;
 		setLocation(x, y);
-		
+	
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 	    //Setzt Fenstergröße automatisch
 	    pack(); 
