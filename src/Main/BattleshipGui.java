@@ -21,7 +21,7 @@ import javax.swing.*;
 public class BattleshipGui extends JFrame {
 
     BackgroundImagePanel backgroundImagePanel;
-    
+
     MenuHandler menuHandler;
 
     public BattleshipGui() {
@@ -30,18 +30,17 @@ public class BattleshipGui extends JFrame {
         setContentPane(backgroundImagePanel = new BackgroundImagePanel("G:\\hs\\Prog2\\Battleship_Alpha2\\Images\\background.jpg"));
 
         menuHandler = new MenuHandler();
-        
+
         add(menuHandler);
-        
+
         setVisible(true);
-        
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     }
-    
+
     public static void main(String[] args) {
-        BattleshipGui  handler = new BattleshipGui();
+        BattleshipGui handler = new BattleshipGui();
     }
 
 }

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class Settings {
     
-    private static final Settings SETTINGS = new Settings();
+//    private static final Settings SETTINGS = new Settings();
 
     private int amountOfPlayer;
     
@@ -25,6 +25,8 @@ public class Settings {
 
     private int playfieldSize;
     
+    SettingsGui gameSettings;
+    
     
        // Konstanten
     final int SIZE_DESTRIOYER = 5;
@@ -36,20 +38,23 @@ public class Settings {
     
     
 
-    public Settings() {
-        this.amountOfPlayer = 2;
+    public Settings(SettingsGui gameGuiSettings) {
+        this.gameSettings = gameGuiSettings;
+        this.amountOfPlayer = gameGuiSettings.getAmountOfPlayer();
         playerNames = new String[6];
         for (int i = 0; i < playerNames.length; i++) {
             playerNames[i] = "Spieler" + (i + 1);
         }
-        this.amountOfKIPlayer = 0;
-        this.amountOfDestroyer = 1;
-        this.amountOfFrigate = 1;
-        this.amountOfCorvette = 2;
-        this.amountOfSubmarine = 2;
+        this.amountOfKIPlayer = gameGuiSettings.getAmountOfKIPlayer();
+        this.amountOfDestroyer = gameGuiSettings.getAmountOfDestroyer();
+        this.amountOfFrigate = gameGuiSettings.getAmountOfFrigate();
+        this.amountOfCorvette = gameGuiSettings.getAmountOfCorvette();
+        this.amountOfSubmarine = gameGuiSettings.getAmountOfSubmarine();
         this.amountOfAllShips = amountOfDestroyer + amountOfFrigate + amountOfCorvette + amountOfSubmarine;
-        calculateMinPlayfieldSize();
+        this.playfieldSize = gameGuiSettings.getPlayfieldSize();
+//        calculateMinPlayfieldSize();
     }
+    
 
     public int getAmountOfAllShips() {
         return amountOfAllShips;
@@ -71,9 +76,9 @@ public class Settings {
     //Instanzvariable ki spieler und im menu ki abfrage
     
     
-    public static Settings getGameSettings() {
-        return SETTINGS;
-    }
+//    public static Settings getGameSettings() {
+//        return SETTINGS;
+//    }
     
     public int getAmountOfPlayer() {
         return amountOfPlayer;

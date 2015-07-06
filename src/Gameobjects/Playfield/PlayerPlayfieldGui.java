@@ -22,14 +22,14 @@ public class PlayerPlayfieldGui extends JPanel {
     FieldGui[][] playfieldMatrix;
     JPanel playfieldMatrixPanel;
     
-    public PlayerPlayfieldGui() {
-        gameSettings = Settings.getGameSettings();
+    public PlayerPlayfieldGui(Settings gameSettings) {
+        this.gameSettings = gameSettings;
         playfieldMatrix = new FieldGui[gameSettings.getPlayfieldSize() + 1][gameSettings.getPlayfieldSize() + 1];
 
 
         playfieldMatrixPanel = new JPanel();
         playfieldMatrixPanel.setLayout(new GridLayout(gameSettings.getPlayfieldSize() + 1, gameSettings.getPlayfieldSize() + 1));
-        playfieldMatrixPanel.setPreferredSize(new Dimension(640, 480));
+//        playfieldMatrixPanel.setPreferredSize(new Dimension(1000, 700));
         for (int i = 0; i < playfieldMatrix.length; i++) {
             for (int j = 0; j < playfieldMatrix[i].length; j++) {
                 playfieldMatrix[i][j] = new FieldGui();

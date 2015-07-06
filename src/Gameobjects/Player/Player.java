@@ -11,7 +11,8 @@ import Gameobjects.Playfield.PlayerPlayfieldGui;
 public class Player {
     
     
-    Settings gameSettings;
+    private Settings gameSettings;
+    
     private int input;
     
     private int number;
@@ -30,12 +31,12 @@ public class Player {
 
     private boolean isAI;
 
-    public Player(int numbern, String name) {
+    public Player(int numbern, Settings gameSettings) {
         this.name = name;
-        this.gameSettings = Settings.getGameSettings();
+        this.gameSettings = gameSettings;
         this.number = number;
         buildShipArray(gameSettings);
-        this.playerPlayFieldGui = new PlayerPlayfieldGui();
+        this.playerPlayFieldGui = new PlayerPlayfieldGui(gameSettings);
 //        playfield = new Playfield(gameSettings.getPlayfieldSize(),gameSettings.getPlayfieldSize());
 //        playfield.printPlayField();
 //        opponentField = new Playfield(gameSettings.getPlayfieldSize(),gameSettings.getPlayfieldSize());

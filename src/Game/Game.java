@@ -25,36 +25,46 @@ public class Game {
     private int amountOfPlayer;
 
     private boolean error;
+    
+    GameGui gameGui;
 
-    public Game() {
-        this.gameSettings = Settings.getGameSettings();
+    public Game(Settings gameSettings) {
+        this.gameSettings = gameSettings;
+        this.playerList = buildPlayerArray(gameSettings);
+        this.gameGui = new GameGui(this);
         IO.println("Willkommen beim Spiel Schiffeversenken!!!");
-        buildPlayerArray();
 //        placeAllShips();
 
+    }
+
+    public GameGui getGameGui() {
+        return gameGui;
+    }
+
+    public Settings getGameSettings() {
+        return gameSettings;
     }
 
 
 
     
+    
+    
     public ArrayList<Player> getPlayerList() {
         return playerList;
     }
 
-    public void setPlayerList(ArrayList<Player> playerList) {
-        this.playerList = playerList;
-    }
 
-    private void buildPlayerArray() {
+    private ArrayList buildPlayerArray(Settings gameSettings) {
         this.playerList = new ArrayList<>();
         int playerNumber = 1;
         for (int i = 0; i < gameSettings.getAmountOfPlayer(); i++) {
-            Player player = new Player(playerNumber, gameSettings.getPlayerNames()[i]);
+            Player player = new Player(playerNumber, gameSettings);
             playerList.add(player);
             playerNumber++;
 
         }
-
+        return playerList;
     }
 
     private void placeAllShips() {

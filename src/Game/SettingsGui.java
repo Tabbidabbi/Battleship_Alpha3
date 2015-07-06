@@ -14,6 +14,8 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import Game.*;
 import Gameobjects.Player.Player;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.*;
@@ -25,10 +27,28 @@ import javax.swing.plaf.basic.BasicMenuUI;
  */
 public class SettingsGui extends JPanel {
 
+    int amountOfPlayer;
+
+    String[] playerNames;
+
+    int amountOfKIPlayer;
+
+    int amountOfDestroyer;
+
+    int amountOfFrigate;
+
+    int amountOfCorvette;
+
+    int amountOfSubmarine;
+
+    int amountOfAllShips;
+
+    int playfieldSize;
+
     JLabel headerLabel;
     JPanel headerPanel;
 
-    JComboBox ammountPlayerComboBox;
+    JComboBox amountPlayerComboBox;
     String[] comboBoxItems = {"2", "3", "4", "5", "6"};
     JLabel playerComboBoxLabel = new JLabel("Anzahl der Spieler");
     JPanel playerComboBoxPanel;
@@ -60,13 +80,19 @@ public class SettingsGui extends JPanel {
 
     MainMenuGui mainMenuGUI;
 
-    Settings gameSettings; 
-    
+    Settings gameSettings;
 
     public SettingsGui() {
         setLayout(new FlowLayout());
-        
-        gameSettings = Settings.getGameSettings();
+        this.amountOfPlayer = 2;
+        this.amountOfKIPlayer = 0;
+        this.amountOfDestroyer = 1;
+        this.amountOfFrigate = 1;
+        this.amountOfCorvette = 2;
+        this.amountOfSubmarine = 2;
+        this.playfieldSize = 8;
+        this.amountOfAllShips = amountOfDestroyer + amountOfFrigate + amountOfCorvette + amountOfSubmarine;
+
         headerLabel = new JLabel("Einstellungen");
         headerLabel.setFont(new Font("Serif", 25, 25));
         headerPanel = new JPanel();
@@ -74,19 +100,19 @@ public class SettingsGui extends JPanel {
         headerPanel.setOpaque(false);
 
         playerComboBoxPanel = new JPanel();
-        ammountPlayerComboBox = new JComboBox(comboBoxItems);
-        ammountPlayerComboBox.addItemListener(new ComboBoxHandler());
-        ammountPlayerComboBox.setSelectedItem(comboBoxItems[0]);
+        amountPlayerComboBox = new JComboBox(comboBoxItems);
+        amountPlayerComboBox.addItemListener(new ComboBoxHandler());
+//        amountPlayerComboBox.setSelectedItem(comboBoxItems[0]);
 
         playerComboBoxPanel.add(playerComboBoxLabel);
-        playerComboBoxPanel.add(ammountPlayerComboBox);
+        playerComboBoxPanel.add(amountPlayerComboBox);
 
         playerPanel = new JPanel();
         playerPanel.setPreferredSize(new Dimension(250, 150));
         playerPanel.setLayout(new BoxLayout(playerPanel, BoxLayout.Y_AXIS));
         for (int i = 0; i < playerTextFields.length; i++) {
-            playerTextFields[i] = new JTextField("Spieler" + (i + 1) ,10);
-            playerTextFields[i].addActionListener(new PlayerTextFieldHandler());
+            playerTextFields[i] = new JTextField("Spieler" + (i + 1), 10);
+            playerTextFields[i].addKeyListener(new PlayerTextFieldHandler());
             singlePlayerPanel[i] = new JPanel();
             kiCheckboxes[i] = new JCheckBox("KI");
             singlePlayerPanel[i].add(ammountPlayersLabel[i]);
@@ -109,17 +135,17 @@ public class SettingsGui extends JPanel {
             singleShipPanel[i].add(setAmmountOfShipsSpinner[i]);
             shipFieldsPanel.add(singleShipPanel[i]);
         }
-        setAmmountOfShipsSpinner[0].setModel(new SpinnerNumberModel(gameSettings.getAmountOfDestroyer(), 0, 3, 1));
-        setAmmountOfShipsSpinner[1].setModel(new SpinnerNumberModel(gameSettings.getAmountOfFrigate(), 0, 4, 1));
-        setAmmountOfShipsSpinner[2].setModel(new SpinnerNumberModel(gameSettings.getAmountOfCorvette(), 0, 5, 1));
-        setAmmountOfShipsSpinner[3].setModel(new SpinnerNumberModel(gameSettings.getAmountOfSubmarine(), 0, 6, 1));
+        setAmmountOfShipsSpinner[0].setModel(new SpinnerNumberModel(1, 0, 3, 1));
+        setAmmountOfShipsSpinner[1].setModel(new SpinnerNumberModel(1, 0, 4, 1));
+        setAmmountOfShipsSpinner[2].setModel(new SpinnerNumberModel(2, 0, 5, 1));
+        setAmmountOfShipsSpinner[3].setModel(new SpinnerNumberModel(2, 0, 6, 1));
 
         playFieldSizeLabel = new JLabel("Spielfeldgröße:");
         playFieldSizeSpinner = new JSpinner();
         playFieldSizeSpinner.addChangeListener(new PlayfieldSizeHandler());
 
-        playFieldSizeSpinner.setModel(new SpinnerNumberModel(gameSettings.getPlayfieldSize(), 8, 26, 1));
-        
+        playFieldSizeSpinner.setModel(new SpinnerNumberModel(8, 8, 26, 1));
+
         playFieldSizePanel = new JPanel();
         playFieldSizePanel.add(playFieldSizeLabel);
         playFieldSizePanel.add(playFieldSizeSpinner);
@@ -138,6 +164,7 @@ public class SettingsGui extends JPanel {
         backButton.setBackground(Color.white);
         backButton.setForeground(Color.black);
         StartGameButton = new JButton("Spiel Starten");
+        StartGameButton.addActionListener(new StartGameHadler() );
         StartGameButton.setActionCommand("Settings-StartGame");
         StartGameButton.setFont(new Font("Serif", 10, 13));
         StartGameButton.setBackground(Color.white);
@@ -165,18 +192,92 @@ public class SettingsGui extends JPanel {
 
     }
 
+    public int getAmountOfPlayer() {
+        return amountOfPlayer;
+    }
+
+    public void setAmountOfPlayer(int amountOfPlayer) {
+        this.amountOfPlayer = amountOfPlayer;
+    }
+
+    public int getAmountOfKIPlayer() {
+        return amountOfKIPlayer;
+    }
+
+    public void setAmountOfKIPlayer(int amountOfKIPlayer) {
+        this.amountOfKIPlayer = amountOfKIPlayer;
+    }
+
+    public int getAmountOfDestroyer() {
+        return amountOfDestroyer;
+    }
+
+    public void setAmountOfDestroyer(int amountOfDestroyer) {
+        this.amountOfDestroyer = amountOfDestroyer;
+    }
+
+    public int getAmountOfFrigate() {
+        return amountOfFrigate;
+    }
+
+    public void setAmountOfFrigate(int amountOfFrigate) {
+        this.amountOfFrigate = amountOfFrigate;
+    }
+
+    public int getAmountOfCorvette() {
+        return amountOfCorvette;
+    }
+
+    public void setAmountOfCorvette(int amountOfCorvette) {
+        this.amountOfCorvette = amountOfCorvette;
+    }
+
+    public int getAmountOfSubmarine() {
+        return amountOfSubmarine;
+    }
+
+    public void setAmountOfSubmarine(int amountOfSubmarine) {
+        this.amountOfSubmarine = amountOfSubmarine;
+    }
+
+    public int getAmountOfAllShips() {
+        return amountOfAllShips;
+    }
+
+    public void setAmountOfAllShips(int amountOfAllShips) {
+        this.amountOfAllShips = amountOfAllShips;
+    }
+
+    public int getPlayfieldSize() {
+        return playfieldSize;
+    }
+
+    public void setPlayfieldSize(int playfieldSize) {
+        this.playfieldSize = playfieldSize;
+    }
+
     public void setListener(ActionListener l) {
         this.backButton.addActionListener(l);
         this.StartGameButton.addActionListener(l);
     }
-public void setGameSettings(Settings gamesettings) {
-    this.gameSettings = gamesettings;
-}
+
+
+    private class StartGameHadler implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            
+           
+            
+            
+            
+        }
+    }
     private class ComboBoxHandler implements ItemListener {
 
         @Override
         public void itemStateChanged(ItemEvent e) {
-            int command = ammountPlayerComboBox.getSelectedIndex();
+            int command = amountPlayerComboBox.getSelectedIndex();
 
             if (e.getStateChange() == ItemEvent.SELECTED) {
 
@@ -191,8 +292,7 @@ public void setGameSettings(Settings gamesettings) {
                         kiCheckboxes[3].setEnabled(false);
                         kiCheckboxes[4].setEnabled(false);
                         kiCheckboxes[5].setEnabled(false);
-                        
-                        gameSettings.setAmountOfPlayer(2);
+                        setAmountOfPlayer(2);
                         break;
                     case 1:
                         playerTextFields[2].setEditable(true);
@@ -204,8 +304,8 @@ public void setGameSettings(Settings gamesettings) {
                         kiCheckboxes[3].setEnabled(false);
                         kiCheckboxes[4].setEnabled(false);
                         kiCheckboxes[5].setEnabled(false);
+                        setAmountOfPlayer(3);
 
-                        gameSettings.setAmountOfPlayer(3);
                         break;
                     case 2:
                         playerTextFields[2].setEditable(true);
@@ -217,8 +317,8 @@ public void setGameSettings(Settings gamesettings) {
                         kiCheckboxes[3].setEnabled(true);
                         kiCheckboxes[4].setEnabled(false);
                         kiCheckboxes[5].setEnabled(false);
-                        
-                        gameSettings.setAmountOfPlayer(4);
+                        setAmountOfPlayer(4);
+
                         break;
                     case 3:
                         playerTextFields[2].setEditable(true);
@@ -230,8 +330,8 @@ public void setGameSettings(Settings gamesettings) {
                         kiCheckboxes[3].setEnabled(true);
                         kiCheckboxes[4].setEnabled(true);
                         kiCheckboxes[5].setEnabled(false);
-                        
-                        gameSettings.setAmountOfPlayer(5);
+                        setAmountOfPlayer(5);
+
                         break;
                     case 4:
                         playerTextFields[2].setEditable(true);
@@ -243,66 +343,68 @@ public void setGameSettings(Settings gamesettings) {
                         kiCheckboxes[3].setEnabled(true);
                         kiCheckboxes[4].setEnabled(true);
                         kiCheckboxes[5].setEnabled(true);
-                        
-                        gameSettings.setAmountOfPlayer(6);
+                        setAmountOfPlayer(6);
+
                         break;
                 }
             }
 
         }
     }
-    
-    private class PlayerTextFieldHandler implements ActionListener {
+
+    private class PlayerTextFieldHandler implements KeyListener {
+
+//        @Override
+//        public void actionPerformed(ActionEvent e) {
+//            
+//            String [] textFieldInput = new String[6];
+//            
+//            
+//            for (int i = 0; i < gameSettings.getAmountOfPlayer(); i++) {
+//                textFieldInput[i] = playerTextFields[i].getText();
+////                gameSettings.setPlayerNames(textFieldInput[i]);
+//                
+//                
+//            }
+////            String textField1 = playerTextFields[0].getText();
+////            String textField2 = playerTextFields[1].getText();
+////            String textField3 = playerTextFields[2].getText();
+////            String textField4 = playerTextFields[3].getText();
+////            String textField5 = playerTextFields[4].getText();
+////            String textField6 = playerTextFields[5].getText();
+//            
+//            
+//            
+//            
+//            
+//            }
+        @Override
+        public void keyTyped(KeyEvent e) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
 
         @Override
-        public void actionPerformed(ActionEvent e) {
-            
-            String [] textFieldInput = new String[6];
-            
-            
-            for (int i = 0; i < gameSettings.getAmountOfPlayer(); i++) {
-                textFieldInput[i] = playerTextFields[i].getText();
-//                gameSettings.setPlayerNames(textFieldInput[i]);
-                
-                
-            }
-//            String textField1 = playerTextFields[0].getText();
-//            String textField2 = playerTextFields[1].getText();
-//            String textField3 = playerTextFields[2].getText();
-//            String textField4 = playerTextFields[3].getText();
-//            String textField5 = playerTextFields[4].getText();
-//            String textField6 = playerTextFields[5].getText();
-            
-            
-            
-            
-            
-            }
+        public void keyPressed(KeyEvent e) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
-    
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+    }
+
     private class PlayfieldSizeHandler implements ChangeListener {
 
         @Override
         public void stateChanged(ChangeEvent e) {
-            
-            int input1 = (int)playFieldSizeSpinner.getValue();
-            
-            
-                gameSettings.setPlayfieldSize(input1);
-                System.out.println(input1);
-            
+
+            int input1 = (int) playFieldSizeSpinner.getValue();
+
+            setPlayfieldSize(input1);
+ 
         }
 
-
-
-            
-
-            
-            
-        }
-        
     }
-        
 
-
-    
+}

@@ -5,8 +5,10 @@
  */
 package Main;
 
+import Game.Game;
 import Game.GameGui;
 import Game.InstructionsGui;
+import Game.Settings;
 import Game.SettingsGui;
 import Gameobjects.Playfield.PlayerPlayfieldGui;
 import Multimedia.BackgroundImagePanel;
@@ -19,7 +21,7 @@ import javax.swing.*;
  * @author Tobias
  */
 public class MenuHandler extends JPanel implements ActionListener {
-
+    
     JPanel panelContainer;
     MainMenuGui mainMenuGui;
     SettingsGui settingsGui;
@@ -31,15 +33,23 @@ public class MenuHandler extends JPanel implements ActionListener {
     GridBagConstraints gridBagConstraints;
 
     CardLayout cardLayout;
-
+    
+    Settings gameSettings;
+    
+    Game newGame;
+    
+    
     public MenuHandler() {
+        
+        
         setOpaque(false);
+        setBackground(Color.red);
+        setPreferredSize(new Dimension(1500, 800));
         cardLayout = new CardLayout();
         setLayout(cardLayout);
-
         mainMenuGui = new MainMenuGui();
         mainMenuGui.setOpaque(false);
-
+        
         add(mainMenuGui, "menu");
 
         cardLayout.show(this, "menu");
@@ -68,7 +78,7 @@ public class MenuHandler extends JPanel implements ActionListener {
         switch (command) {
 
             case "Menu-NewGame":
-                settingsGui = new SettingsGui();
+                this.settingsGui = new SettingsGui();
                 add(settingsGui, "settings");
                 addSettingsGuiListener();
                 cardLayout.show(this, "settings");
@@ -88,8 +98,13 @@ public class MenuHandler extends JPanel implements ActionListener {
                     cardLayout.show(this, "menu");
                 break;
             case "Settings-StartGame":
-                    gameGui = new GameGui();
-                    add(gameGui, "newGame");
+//                settingsGui.setAmountOfPlayer(4);
+                System.out.println("Hallo");
+                System.out.println(settingsGui);
+                this.gameSettings = new Settings(settingsGui);
+                System.out.println(gameSettings);
+                this.newGame =   new Game(gameSettings);
+                    add(newGame.getGameGui(), "newGame");
                     cardLayout.show(this, "newGame");
                     break;
             case "Instructions-MainMenuButton":

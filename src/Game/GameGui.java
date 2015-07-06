@@ -57,17 +57,15 @@ public class GameGui extends JPanel {
 
     private PrintStream standardOut;
 
-    public GameGui() {
-        setPreferredSize(new Dimension(1200, 800));
-        game = new Game();
-        gameSettings = Settings.getGameSettings();
+    public GameGui(Game game) {
+        this.game = game;
+        this.gameSettings = game.getGameSettings();
         setOpaque(false);
         GroupLayout gameGuiLayout = new GroupLayout(this);
 
         playerPlayFieldPanel = new JPanel();
-        playerPlayFieldPanel.setPreferredSize(new Dimension(800, 500));
-        playerPlayFieldPanel.setOpaque(false);
-        playerPlayFieldArray = new JPanel[Settings.getGameSettings().getAmountOfPlayer()];
+//        playerPlayFieldPanel.setOpaque(false);
+        playerPlayFieldArray = new JPanel[gameSettings.getAmountOfPlayer()];
         for (int i = 0; i < game.getPlayerList().size(); i++) {
             playerPlayFieldArray[i] = game.getPlayerList().get(i).getPlayerPlayFieldGui();
         }
@@ -79,7 +77,7 @@ public class GameGui extends JPanel {
 //        playerListPanel.setMaximumSize(new Dimension(300, 200));
         playerListPanel.add(playerListLabel);
         playerListPanel.setLayout(new BoxLayout(playerListPanel, BoxLayout.Y_AXIS));
-        playerButton = new JButton[Settings.getGameSettings().getAmountOfPlayer()];
+        playerButton = new JButton[gameSettings.getAmountOfPlayer()];
         for (int i = 0; i < playerButton.length; i++) {
             playerButton[i] = new JButton(game.getPlayerList().get(i).getName());
             playerListPanel.add(playerButton[i]);
@@ -128,22 +126,30 @@ public class GameGui extends JPanel {
         setLayout(gameGuiLayout);
         gameGuiLayout.setVerticalGroup(
                 gameGuiLayout.createSequentialGroup()
-                .addComponent(playerPlayFieldPanel)
-                .addGroup(gameGuiLayout.createParallelGroup(GroupLayout.Alignment.CENTER)
-                        .addComponent(playerListPanel)
-                        .addComponent(textOutputPanel)
-                        .addComponent(shipListPanel))
+                .addGroup(gameGuiLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                        .addComponent(playerPlayFieldPanel)
+                        .addGroup(gameGuiLayout.createSequentialGroup()
+                                .addComponent(textOutputPanel)
+                                .addGroup(gameGuiLayout.createParallelGroup()
+                                        .addComponent(playerListPanel)
+                                        .addComponent(shipListPanel))
+                        )
+                )
                 .addComponent(buttonPanel)
         );
         gameGuiLayout.setHorizontalGroup(
                 gameGuiLayout.createSequentialGroup()
-                .addComponent(playerListPanel)
+                .addComponent(playerPlayFieldPanel)
                 .addGroup(gameGuiLayout.createParallelGroup(GroupLayout.Alignment.CENTER)
-                        .addComponent(playerPlayFieldPanel)
                         .addComponent(textOutputPanel)
+                        .addGroup(gameGuiLayout.createSequentialGroup()
+                                .addComponent(playerListPanel)
+                                .addComponent(shipListPanel))
                         .addComponent(buttonPanel))
-                .addComponent(shipListPanel)
         );
+
+        gameGuiLayout.setAutoCreateGaps(true);
+        gameGuiLayout.setAutoCreateContainerGaps(true);
 
         setVisible(true);
     }
