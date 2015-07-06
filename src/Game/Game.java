@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import com.sun.org.apache.xml.internal.security.utils.HelperNodeList;
 
 import Helper.Helper;
+import SaveLoad.SaveLoad;
 
 public class Game implements Serializable {
 
@@ -397,6 +398,7 @@ public class Game implements Serializable {
 
             }
             this.roundNumber++;
+            SaveLoad.save(this);
         }
         Helper.printWinner(playerList);
     }
