@@ -28,6 +28,7 @@ public class Settings {
     SettingsGui gameSettings;
     
     
+    
        // Konstanten
     final int SIZE_DESTRIOYER = 5;
     final int SIZE_FRIGATE = 4;
@@ -41,10 +42,7 @@ public class Settings {
     public Settings(SettingsGui gameGuiSettings) {
         this.gameSettings = gameGuiSettings;
         this.amountOfPlayer = gameGuiSettings.getAmountOfPlayer();
-        playerNames = new String[6];
-        for (int i = 0; i < playerNames.length; i++) {
-            playerNames[i] = "Spieler" + (i + 1);
-        }
+        this.playerNames = gameGuiSettings.getPlayerNames();
         this.amountOfKIPlayer = gameGuiSettings.getAmountOfKIPlayer();
         this.amountOfDestroyer = gameGuiSettings.getAmountOfDestroyer();
         this.amountOfFrigate = gameGuiSettings.getAmountOfFrigate();

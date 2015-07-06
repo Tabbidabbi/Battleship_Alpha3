@@ -70,6 +70,10 @@ public class MenuHandler extends JPanel implements ActionListener {
     private void addInstructionGuiListener() {
         this.instructionsGui.setListener(this);
     }
+    
+    private void addGameGuiListener() {
+        this.newGame.getGameGui().setGameButtonListener(this);
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -98,17 +102,18 @@ public class MenuHandler extends JPanel implements ActionListener {
                     cardLayout.show(this, "menu");
                 break;
             case "Settings-StartGame":
-//                settingsGui.setAmountOfPlayer(4);
-                System.out.println("Hallo");
-                System.out.println(settingsGui);
                 this.gameSettings = new Settings(settingsGui);
                 System.out.println(gameSettings);
                 this.newGame =   new Game(gameSettings);
                     add(newGame.getGameGui(), "newGame");
                     cardLayout.show(this, "newGame");
+                    addGameGuiListener();
                     break;
             case "Instructions-MainMenuButton":
                     cardLayout.show(this, "menu");
+                break;
+            case "Game-MainMenu": 
+                cardLayout.show(this, "menu");
                 break;
 
         }

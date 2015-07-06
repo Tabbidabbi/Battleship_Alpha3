@@ -29,7 +29,7 @@ public class PlayerPlayfieldGui extends JPanel {
 
         playfieldMatrixPanel = new JPanel();
         playfieldMatrixPanel.setLayout(new GridLayout(gameSettings.getPlayfieldSize() + 1, gameSettings.getPlayfieldSize() + 1));
-//        playfieldMatrixPanel.setPreferredSize(new Dimension(1000, 700));
+        playfieldMatrixPanel.setPreferredSize(new Dimension(900, 700));
         for (int i = 0; i < playfieldMatrix.length; i++) {
             for (int j = 0; j < playfieldMatrix[i].length; j++) {
                 playfieldMatrix[i][j] = new FieldGui();

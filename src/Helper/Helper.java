@@ -28,6 +28,8 @@ public class Helper {
 	 *            Maximum Value
 	 * @return
 	 */
+        
+        
 	public static int checkUserInput(String message, int min, int max) {
 		boolean error = false;
 		do {
