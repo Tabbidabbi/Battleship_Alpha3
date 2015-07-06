@@ -112,7 +112,7 @@ public class SettingsGui extends JPanel {
         playerPanel.setLayout(new BoxLayout(playerPanel, BoxLayout.Y_AXIS));
         for (int i = 0; i < playerTextFields.length; i++) {
             playerTextFields[i] = new JTextField("Spieler" + (i + 1), 10);
-            playerTextFields[i].addKeyListener(new PlayerTextFieldHandler());
+//            playerTextFields[i].addActionListener(new StartGameHadler());
             singlePlayerPanel[i] = new JPanel();
             kiCheckboxes[i] = new JCheckBox("KI");
             singlePlayerPanel[i].add(ammountPlayersLabel[i]);
@@ -192,6 +192,11 @@ public class SettingsGui extends JPanel {
 
     }
 
+    public String[] getPlayerNames() {
+        return playerNames;
+    }
+
+    
     public int getAmountOfPlayer() {
         return amountOfPlayer;
     }
@@ -267,7 +272,10 @@ public class SettingsGui extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             
-           
+//           for (int i = 0; i < getAmountOfPlayer(); i++) {
+//               playerNames[i] = playerTextFields[i].getText();
+//               
+//           }
             
             
             
@@ -349,48 +357,6 @@ public class SettingsGui extends JPanel {
                 }
             }
 
-        }
-    }
-
-    private class PlayerTextFieldHandler implements KeyListener {
-
-//        @Override
-//        public void actionPerformed(ActionEvent e) {
-//            
-//            String [] textFieldInput = new String[6];
-//            
-//            
-//            for (int i = 0; i < gameSettings.getAmountOfPlayer(); i++) {
-//                textFieldInput[i] = playerTextFields[i].getText();
-////                gameSettings.setPlayerNames(textFieldInput[i]);
-//                
-//                
-//            }
-////            String textField1 = playerTextFields[0].getText();
-////            String textField2 = playerTextFields[1].getText();
-////            String textField3 = playerTextFields[2].getText();
-////            String textField4 = playerTextFields[3].getText();
-////            String textField5 = playerTextFields[4].getText();
-////            String textField6 = playerTextFields[5].getText();
-//            
-//            
-//            
-//            
-//            
-//            }
-        @Override
-        public void keyTyped(KeyEvent e) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        @Override
-        public void keyPressed(KeyEvent e) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        @Override
-        public void keyReleased(KeyEvent e) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
     }
 
