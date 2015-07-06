@@ -1,8 +1,14 @@
 package Gameobjects.Ships;
 
-public class Submarine extends Ship {
+import java.io.Serializable;
 
-    String name = "U-Boot";
+public class Submarine extends Ship implements Serializable{
+
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8570994728399446892L;
+	String name = "U-Boot";
 
   //U-Boote positionieren
     public Submarine(int number) {

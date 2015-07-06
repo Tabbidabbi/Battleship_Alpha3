@@ -1,13 +1,20 @@
 package Gameobjects.Playfield;
 
 
+import java.io.Serializable;
+
 import Game.Settings;
 import Gameobjects.Playfield.Field;
 import IO.IO;
 
-public class Playfield {
+public class Playfield implements Serializable{
 
-    private Field[][] fieldMatrix;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5068259163966030799L;
+
+	private Field[][] fieldMatrix;
 
     private String fieldNumber;
 
@@ -51,6 +58,43 @@ public class Playfield {
 
         }
         
+    }
+    
+    public int[] setShot(String coordinate, int shootRange, boolean orientation) {
+        //Array, in dem  die getroffenen Schiffe stehen
+        int[] hitShips = new int[shootRange];
+        if (orientation == true) {
+            for (int y = 0; y < getFieldMatrix().length; y++) {
+                for (int x = 0; x < getFieldMatrix()[y].length; x++) {
+                    if (coordinate.equals(getFieldMatrix()[y][x].getFieldNumber())) {
+                        for (int i = 0; i < shootRange; i++) {
+                        	try{
+                        		hitShips[i] = this.fieldMatrix[y][x + i].setIsShot();
+                        	}
+                        	catch(IndexOutOfBoundsException e){
+                        		e.printStackTrace();
+                        	}
+                        }
+                    }
+                }
+            }
+        } else {
+            for (int y = 0; y < getFieldMatrix().length; y++) {
+                for (int x = 0; x < getFieldMatrix()[y].length; x++) {
+                    if (coordinate.equals(getFieldMatrix()[y][x].getFieldNumber())) {
+                        for (int i = 0; i < shootRange; i++) {
+                        	try{
+                        		hitShips[i] = this.fieldMatrix[y + i][x].setIsShot();
+                        	}
+                            catch(IndexOutOfBoundsException e){
+                            	e.printStackTrace();
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return hitShips;
     }
     
         //Wie sieht das PlayField aus

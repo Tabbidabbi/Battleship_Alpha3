@@ -38,9 +38,4 @@ public class BattleshipGui extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     }
-
-    public static void main(String[] args) {
-        BattleshipGui handler = new BattleshipGui();
-    }
-
 }

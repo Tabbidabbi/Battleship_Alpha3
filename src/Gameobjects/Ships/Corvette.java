@@ -1,8 +1,14 @@
 package Gameobjects.Ships;
 
-public class Corvette extends Ship {
+import java.io.Serializable;
 
-    String name = "Korvette";
+public class Corvette extends Ship implements Serializable{
+
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 3219828611685870243L;
+	String name = "Korvette";
 	
 	//Korvette positioniert 
 	

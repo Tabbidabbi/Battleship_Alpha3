@@ -1,8 +1,14 @@
 package Gameobjects.Ships;
 
-public class Destroyer extends Ship {
+import java.io.Serializable;
 
-    String name = "Zerstörer";
+public class Destroyer extends Ship implements Serializable{
+
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4752146596402397185L;
+	String name = "Zerstörer";
 
 	//Zerstörer positionieren
     public Destroyer(int number) {

@@ -4,16 +4,24 @@ import Game.Settings;
 import Gameobjects.Playfield.Playfield;
 import Gameobjects.Ships.*;
 import IO.IO;
+
+import java.io.Serializable;
 import java.util.ArrayList;
+
 import Game.Game;
 import Gameobjects.Playfield.PlayerPlayfieldGui;
 
-public class Player {
+public class Player implements Serializable{
     
     
     private Settings gameSettings;
     
-    private int input;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3542755719003023085L;
+
+	private int input;
     
     private int number;
 
@@ -30,6 +38,11 @@ public class Player {
     private boolean lost;
 
     private boolean isAI;
+    
+    private int lastHitOpponentNumber;
+	
+	private String aiLastHitCoordinate;
+	
 
     public Player(int numbern, Settings gameSettings) {
         this.name = name;
@@ -119,7 +132,7 @@ public class Player {
         this.opponentField = opponentField;
     }
 
-    public boolean isLost() {
+    public boolean getisLost() {
         return lost;
     }
 
@@ -127,7 +140,7 @@ public class Player {
         this.lost = lost;
     }
 
-    public boolean isIsAI() {
+    public boolean getIsAI() {
         return isAI;
     }
 
@@ -135,9 +148,23 @@ public class Player {
         this.isAI = isAI;
     }
     
- 
-    
-    public void printShipList() {
+    public int getLastHitOpponentNumber() {
+		return lastHitOpponentNumber;
+	}
+
+	public void setLastHitOpponentNumber(int lastHitOpponentNumber) {
+		this.lastHitOpponentNumber = lastHitOpponentNumber;
+	}
+
+	public String getAiLastHitCoordinate() {
+		return aiLastHitCoordinate;
+	}
+
+	public void setAiLastHitCoordinate(String aiLastHitCoordinate) {
+		this.aiLastHitCoordinate = aiLastHitCoordinate;
+	}
+
+	public void printShipList() {
 
         for (Ship ship : ships) {
             IO.println(ship.getName() + "\t" + ship.getNumber() + "\t"

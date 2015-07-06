@@ -1,10 +1,17 @@
 package Gameobjects.Playfield;
 
+import java.io.Serializable;
+
 import IO.IO;
 
-public class Field {
+public class Field implements Serializable{
 
-    private boolean isShot;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8054963586333812399L;
+
+	private boolean isShot;
 
     private boolean isWater;
 
@@ -23,7 +30,7 @@ public class Field {
     private int shipNumber;
     
     
-    	public Field() {
+    public Field() {
 		this.isShot = false;
 		this.isWater = true;
 		this.isHit = false;
@@ -33,23 +40,40 @@ public class Field {
                 this.opponentStatus = "~";
     }
 
-    public boolean isIsShot() {
+    public boolean getIsShot() {
         return isShot;
     }
 
-    public void setIsShot(boolean isShot) {
-        this.isShot = isShot;
-    }
+    public int setIsShot(){
+		if(this.isShot == false){
+			this.isShot = true;
+			if(getHasShip() == true){
+				this.setPlayerStatus("X");
+				this.setOpponentStatus("X");
+				this.setIsHit(true);
+				//IO.println("Sie haben ein Schiff getroffen!");
+			}
+			else{
+				this.setPlayerStatus("O");
+				this.setOpponentStatus("O");
+				//IO.println("Sie haben auf Wasser geschossen!");
+			}
+		}
+		else{
+			IO.println("Sie haben bereits auf dieses Feld geschossen. Ein verschenkter Schuss!");
+		}
+		return getShipNumber();
+	}
 
     public boolean getIsWater() {
         return isWater;
     }
 
     public void setIsWater(boolean isWater) {
-        this.isWater = isWater;
+        this.isWater = true;
     }
 
-    public boolean isIsHit() {
+    public boolean getIsHit() {
         return isHit;
     }
 
@@ -57,7 +81,7 @@ public class Field {
         this.isHit = isHit;
     }
 
-    public boolean isHasShip() {
+    public boolean getHasShip() {
         return hasShip;
     }
 

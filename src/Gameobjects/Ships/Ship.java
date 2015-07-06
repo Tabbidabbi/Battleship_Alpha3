@@ -1,8 +1,17 @@
 package Gameobjects.Ships;
 
-public abstract class Ship {
+import java.io.Serializable;
 
-    private int size;
+import IO.IO;
+
+public abstract class Ship implements Serializable{
+
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7853606283486598296L;
+
+	private int size;
 
     private boolean sunk;
 
@@ -44,7 +53,7 @@ public abstract class Ship {
         this.size = size;
     }
 
-    public boolean isSunk() {
+    public boolean getIsSunk() {
         return sunk;
     }
 
@@ -80,8 +89,13 @@ public abstract class Ship {
         return currentReloadTime;
     }
 
-    public void setCurrentReloadTime(int currentReloadTime) {
-        this.currentReloadTime = currentReloadTime;
+    public void setCurrentReloadTime() {
+        this.currentReloadTime = this.reloadTime + 1;
+    }
+    
+    //Setzt ReloadTime einen Z�hler runter
+    public void setDownReloadTime() {
+        this.currentReloadTime--;
     }
 
     public int getShootRange() {
@@ -96,8 +110,14 @@ public abstract class Ship {
         return hitpoints;
     }
 
-    public void setHitpoints(int hitpoints) {
-        this.hitpoints = hitpoints;
+    public void setHitpoints() {
+    	this.hitpoints--;
+    	if(getHitpoints() == 0){
+    		setSunk(true);
+    		IO.println("Schiff wurde versenkt.");
+    		//test
+    		IO.println(getNumber()+ " " + getName() + " " + getHitpoints() + " " + getIsSunk());
+    	}
     }
 
     public String getSign() {
