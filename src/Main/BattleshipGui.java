@@ -34,6 +34,7 @@ public class BattleshipGui extends JFrame {
         add(menuHandler);
         
         setVisible(true);
+        
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

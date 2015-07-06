@@ -20,6 +20,8 @@ public class Settings {
     private int amountOfCorvette;
 
     private int amountOfSubmarine;
+    
+    private int amountOfAllShips;
 
     private int playfieldSize;
     
@@ -45,9 +47,16 @@ public class Settings {
         this.amountOfFrigate = 1;
         this.amountOfCorvette = 2;
         this.amountOfSubmarine = 2;
+        this.amountOfAllShips = amountOfDestroyer + amountOfFrigate + amountOfCorvette + amountOfSubmarine;
         calculateMinPlayfieldSize();
     }
 
+    public int getAmountOfAllShips() {
+        return amountOfAllShips;
+    }
+
+    
+    
     public String[] getPlayerNames() {
         return playerNames;
     }
