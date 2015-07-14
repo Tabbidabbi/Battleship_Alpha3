@@ -50,7 +50,7 @@ public class SettingsGui extends JPanel {
 
     JComboBox amountPlayerComboBox;
     String[] comboBoxItems = {"2", "3", "4", "5", "6"};
-    JLabel playerComboBoxLabel = new JLabel("Anzahl der Spieler");
+    JLabel playerComboBoxLabel;
     JPanel playerComboBoxPanel;
 
     JLabel[] ammountPlayersLabel = {new JLabel("Spieler 1:"), new JLabel("Spieler 2:"), new JLabel("Spieler 3:"),
@@ -100,10 +100,10 @@ public class SettingsGui extends JPanel {
         headerPanel.setOpaque(false);
 
         playerComboBoxPanel = new JPanel();
+        playerComboBoxLabel = new JLabel("Anzahl der Spieler");
         amountPlayerComboBox = new JComboBox(comboBoxItems);
         amountPlayerComboBox.addItemListener(new ComboBoxHandler());
-//        amountPlayerComboBox.setSelectedItem(comboBoxItems[0]);
-
+        amountPlayerComboBox.setSelectedItem(comboBoxItems[0]);
         playerComboBoxPanel.add(playerComboBoxLabel);
         playerComboBoxPanel.add(amountPlayerComboBox);
 
@@ -112,7 +112,6 @@ public class SettingsGui extends JPanel {
         playerPanel.setLayout(new BoxLayout(playerPanel, BoxLayout.Y_AXIS));
         for (int i = 0; i < playerTextFields.length; i++) {
             playerTextFields[i] = new JTextField("Spieler" + (i + 1), 10);
-//            playerTextFields[i].addActionListener(new StartGameHadler());
             singlePlayerPanel[i] = new JPanel();
             kiCheckboxes[i] = new JCheckBox("KI");
             singlePlayerPanel[i].add(ammountPlayersLabel[i]);
@@ -133,6 +132,7 @@ public class SettingsGui extends JPanel {
             singleShipPanel[i] = new JPanel();
             singleShipPanel[i].add(shipLabel[i]);
             singleShipPanel[i].add(setAmmountOfShipsSpinner[i]);
+//            setAmmountOfShipsSpinner[i].addChangeListener(new SetShipSpinnerHandler() );
             shipFieldsPanel.add(singleShipPanel[i]);
         }
         setAmmountOfShipsSpinner[0].setModel(new SpinnerNumberModel(1, 0, 3, 1));
@@ -142,8 +142,7 @@ public class SettingsGui extends JPanel {
 
         playFieldSizeLabel = new JLabel("Spielfeldgröße:");
         playFieldSizeSpinner = new JSpinner();
-        playFieldSizeSpinner.addChangeListener(new PlayfieldSizeHandler());
-
+//        playFieldSizeSpinner.addChangeListener(new PlayfieldSizeHandler());
         playFieldSizeSpinner.setModel(new SpinnerNumberModel(8, 8, 26, 1));
 
         playFieldSizePanel = new JPanel();
@@ -164,8 +163,8 @@ public class SettingsGui extends JPanel {
         backButton.setBackground(Color.white);
         backButton.setForeground(Color.black);
         StartGameButton = new JButton("Spiel Starten");
-        StartGameButton.addActionListener(new StartGameHadler() );
         StartGameButton.setActionCommand("Settings-StartGame");
+
         StartGameButton.setFont(new Font("Serif", 10, 13));
         StartGameButton.setBackground(Color.white);
         StartGameButton.setForeground(Color.black);
@@ -196,7 +195,6 @@ public class SettingsGui extends JPanel {
         return playerNames;
     }
 
-    
     public int getAmountOfPlayer() {
         return amountOfPlayer;
     }
@@ -267,20 +265,6 @@ public class SettingsGui extends JPanel {
     }
 
 
-    private class StartGameHadler implements ActionListener{
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            
-//           for (int i = 0; i < getAmountOfPlayer(); i++) {
-//               playerNames[i] = playerTextFields[i].getText();
-//               
-//           }
-            
-            
-            
-        }
-    }
     private class ComboBoxHandler implements ItemListener {
 
         @Override
@@ -300,7 +284,6 @@ public class SettingsGui extends JPanel {
                         kiCheckboxes[3].setEnabled(false);
                         kiCheckboxes[4].setEnabled(false);
                         kiCheckboxes[5].setEnabled(false);
-                        setAmountOfPlayer(2);
                         break;
                     case 1:
                         playerTextFields[2].setEditable(true);
@@ -312,7 +295,6 @@ public class SettingsGui extends JPanel {
                         kiCheckboxes[3].setEnabled(false);
                         kiCheckboxes[4].setEnabled(false);
                         kiCheckboxes[5].setEnabled(false);
-                        setAmountOfPlayer(3);
 
                         break;
                     case 2:
@@ -325,7 +307,6 @@ public class SettingsGui extends JPanel {
                         kiCheckboxes[3].setEnabled(true);
                         kiCheckboxes[4].setEnabled(false);
                         kiCheckboxes[5].setEnabled(false);
-                        setAmountOfPlayer(4);
 
                         break;
                     case 3:
@@ -338,7 +319,6 @@ public class SettingsGui extends JPanel {
                         kiCheckboxes[3].setEnabled(true);
                         kiCheckboxes[4].setEnabled(true);
                         kiCheckboxes[5].setEnabled(false);
-                        setAmountOfPlayer(5);
 
                         break;
                     case 4:
@@ -351,7 +331,6 @@ public class SettingsGui extends JPanel {
                         kiCheckboxes[3].setEnabled(true);
                         kiCheckboxes[4].setEnabled(true);
                         kiCheckboxes[5].setEnabled(true);
-                        setAmountOfPlayer(6);
 
                         break;
                 }
@@ -360,17 +339,18 @@ public class SettingsGui extends JPanel {
         }
     }
 
-    private class PlayfieldSizeHandler implements ChangeListener {
+    public void setSettings() {
+        String userInput;
 
-        @Override
-        public void stateChanged(ChangeEvent e) {
-
-            int input1 = (int) playFieldSizeSpinner.getValue();
-
-            setPlayfieldSize(input1);
- 
+        userInput = (String) amountPlayerComboBox.getSelectedItem();
+        amountOfPlayer = Integer.parseInt(userInput);
+        
+        playerNames = new String[amountOfPlayer];
+        for (int i = 0; i < playerNames.length; i++) {
+            playerNames[i] = playerTextFields[i].getText();
         }
+        
+        playfieldSize = (int)playFieldSizeSpinner.getValue();
 
     }
-
 }

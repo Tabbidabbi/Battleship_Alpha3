@@ -27,8 +27,6 @@ import javax.swing.GroupLayout.SequentialGroup;
  */
 public class GameGui extends JPanel {
 
-//    GridBagLayout gridBagLayout;
-//    GridBagConstraints gbc;
     BoxLayout boxLayout;
 
     JPanel playerPlayFieldPanel;
@@ -64,7 +62,7 @@ public class GameGui extends JPanel {
         GroupLayout gameGuiLayout = new GroupLayout(this);
 
         playerPlayFieldPanel = new JPanel();
-//        playerPlayFieldPanel.setOpaque(false);
+        playerPlayFieldPanel.setOpaque(false);
         playerPlayFieldArray = new JPanel[gameSettings.getAmountOfPlayer()];
         for (int i = 0; i < game.getPlayerList().size(); i++) {
             playerPlayFieldArray[i] = game.getPlayerList().get(i).getPlayerPlayFieldGui();

@@ -85,7 +85,7 @@ public class Game implements Serializable {
         this.playerList = new ArrayList<>();
         int playerNumber = 1;
         for (int i = 0; i < gameSettings.getAmountOfPlayer(); i++) {
-            Player player = new Player(playerNumber, gameSettings);
+            Player player = new Player(playerNumber,gameSettings.getPlayerNames()[i], gameSettings);
             playerList.add(player);
             playerNumber++;
 

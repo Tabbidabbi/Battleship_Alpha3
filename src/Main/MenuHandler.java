@@ -85,6 +85,7 @@ public class MenuHandler extends JPanel implements ActionListener {
                 this.settingsGui = new SettingsGui();
                 add(settingsGui, "settings");
                 addSettingsGuiListener();
+                System.out.println("MenuListener");
                 cardLayout.show(this, "settings");
                 break;
             case "Menu-LoadGame":
@@ -102,8 +103,8 @@ public class MenuHandler extends JPanel implements ActionListener {
                     cardLayout.show(this, "menu");
                 break;
             case "Settings-StartGame":
+                settingsGui.setSettings();
                 this.gameSettings = new Settings(settingsGui);
-                System.out.println(gameSettings);
                 this.newGame =   new Game(gameSettings);
                     add(newGame.getGameGui(), "newGame");
                     cardLayout.show(this, "newGame");

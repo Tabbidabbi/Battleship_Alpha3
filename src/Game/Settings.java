@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 public class Settings {
     
-//    private static final Settings SETTINGS = new Settings();
 
     private int amountOfPlayer;
     
@@ -74,9 +73,6 @@ public class Settings {
     //Instanzvariable ki spieler und im menu ki abfrage
     
     
-//    public static Settings getGameSettings() {
-//        return SETTINGS;
-//    }
     
     public int getAmountOfPlayer() {
         return amountOfPlayer;
