@@ -28,7 +28,7 @@ public class FieldGui extends JButton {
         
     }
 
-    public boolean getIsActive() {
+    public boolean isActive() {
         return active;
     }
 
@@ -42,7 +42,6 @@ public class FieldGui extends JButton {
     public void setText(String text) {
         super.setText(text); //To change body of generated methods, choose Tools | Templates.
     }
-    
     
     
     

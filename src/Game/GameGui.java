@@ -19,20 +19,22 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import Main.BattleshipGui_old;
 import Main.MenuHandler;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import javax.swing.GroupLayout.SequentialGroup;
 
 /**
  *
  * @author Tobias
  */
-public class GameGui extends JPanel {
+public class GameGui extends JPanel  {
 
     BoxLayout boxLayout;
 
+    CardLayout playFieldCardLayout;
+
     JPanel playerPlayFieldPanel;
     JPanel[] playerPlayFieldArray;
-
-    Game game;
 
     Settings gameSettings;
 
@@ -41,7 +43,7 @@ public class GameGui extends JPanel {
     JPanel playerListPanel;
 
     JTextArea textOutputArea;
-    JPanel textOutputPanel;
+    JScrollPane textOutputPanel;
     JPanel midPanel;
 
     JLabel shipListLabel;
@@ -55,56 +57,36 @@ public class GameGui extends JPanel {
 
     private PrintStream standardOut;
 
-    public GameGui(Game game) {
-        this.game = game;
-        this.gameSettings = game.getGameSettings();
+    public GameGui(Settings gameSettings) {
+        this.gameSettings = gameSettings;
         setOpaque(false);
         GroupLayout gameGuiLayout = new GroupLayout(this);
 
         playerPlayFieldPanel = new JPanel();
+        playFieldCardLayout = new CardLayout();
+        playerPlayFieldPanel.setLayout(playFieldCardLayout);
         playerPlayFieldPanel.setOpaque(false);
-        playerPlayFieldArray = new JPanel[gameSettings.getAmountOfPlayer()];
-        for (int i = 0; i < game.getPlayerList().size(); i++) {
-            playerPlayFieldArray[i] = game.getPlayerList().get(i).getPlayerPlayFieldGui();
-        }
-
-        playerPlayFieldPanel.add(playerPlayFieldArray[0]);
-
+        
+        
         playerListLabel = new JLabel("Spieler: ");
         playerListPanel = new JPanel();
-//        playerListPanel.setMaximumSize(new Dimension(300, 200));
         playerListPanel.add(playerListLabel);
         playerListPanel.setLayout(new BoxLayout(playerListPanel, BoxLayout.Y_AXIS));
-        playerButton = new JButton[gameSettings.getAmountOfPlayer()];
-        for (int i = 0; i < playerButton.length; i++) {
-            playerButton[i] = new JButton(game.getPlayerList().get(i).getName());
-            playerListPanel.add(playerButton[i]);
-        }
 
-        textOutputArea = new JTextArea(10, 35);
+        textOutputArea = new JTextArea();
         textOutputArea.setEditable(false);
-//        PrintStream printStream = new PrintStream(new CustomOutputStream(textOutputArea));
-//        standardOut = System.out;
-//        System.setOut(printStream);
-//        System.setErr(printStream);
-//        printStream.println("Hallo Welt");
+        PrintStream printStream = new PrintStream(new CustomOutputStream(textOutputArea),true);
+        standardOut = System.out;
+        System.setOut(printStream);
+        System.setErr(printStream);
+        
 
-        textOutputPanel = new JPanel();
-        textOutputPanel.setPreferredSize(new Dimension(200, 200));
-        textOutputPanel.setOpaque(false);
-        textOutputPanel.add(textOutputArea);
+        textOutputPanel = new JScrollPane(textOutputArea);
 
         shipListLabel = new JLabel("Schiffe: ");
         shipListPanel = new JPanel();
         shipListPanel.add(shipListLabel);
         shipListPanel.setLayout(new BoxLayout(shipListPanel, BoxLayout.Y_AXIS));
-        shipListButtons = new JButton[gameSettings.getAmountOfAllShips()];
-        for (int i = 0; i < 1; i++) {
-            for (int j = 0; j < shipListButtons.length; j++) {
-                shipListButtons[j] = new JButton(game.getPlayerList().get(i).getShips().get(j).getName());
-                shipListPanel.add(shipListButtons[j]);
-            }
-        }
 
         menuButton = new JButton("Hauptmenü");
         menuButton.setActionCommand("Game-MainMenu");
@@ -152,14 +134,43 @@ public class GameGui extends JPanel {
         setVisible(true);
     }
 
-    public void setGame(Game game) {
-        this.game = game;
+    public void addPlayerPlayField(int playerNumber, ArrayList<Player> playerList) {
+
+        playerPlayFieldPanel.add(playerList.get(playerNumber).getPlayerPlayFieldGui(), "Player" + playerNumber);
+
     }
+
+    public void showPlayerPlayField(int playerNumber) {
+        playFieldCardLayout.show(playerPlayFieldPanel, "Player" + playerNumber);
+
+    }
+
+    public void showPlayers(ArrayList<Player> playerList) {
+        playerButton = new JButton[playerList.size()];
+        for (int i = 0; i < playerButton.length; i++) {
+            playerButton[i] = new JButton(playerList.get(i).getName());
+            playerListPanel.add(playerButton[i]);
+        }
+        repaint();
+
+    }
+
+    public void showPlayerShips(int playerNumber, ArrayList<Player> playerList) {
+        shipListButtons = new JButton[playerList.get(playerNumber).getShips().size()];
+        for (int i = 0; i < shipListButtons.length; i++) {
+            shipListButtons[i] = new JButton(playerList.get(playerNumber).getShips().get(i).getName());
+            shipListPanel.add(shipListButtons[i]);
+        }
+        repaint();
+    }
+    
+
 
     public void setGameButtonListener(ActionListener l) {
         this.menuButton.addActionListener(l);
         this.saveGameButton.addActionListener(l);
     }
+
 
     public class CustomOutputStream extends OutputStream {
 

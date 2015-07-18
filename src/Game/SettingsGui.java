@@ -350,6 +350,17 @@ public class SettingsGui extends JPanel {
             playerNames[i] = playerTextFields[i].getText();
         }
         
+        for (int i = 0; i < amountOfPlayer; i++) {
+            if (kiCheckboxes[i].isSelected()){
+                amountOfKIPlayer++;
+            }
+        }
+        
+        amountOfDestroyer = (int)setAmmountOfShipsSpinner[0].getValue();
+        amountOfFrigate = (int)setAmmountOfShipsSpinner[1].getValue();
+        amountOfCorvette = (int)setAmmountOfShipsSpinner[2].getValue();
+        amountOfSubmarine = (int)setAmmountOfShipsSpinner[3].getValue();
+        
         playfieldSize = (int)playFieldSizeSpinner.getValue();
 
     }

@@ -82,7 +82,7 @@ public class Player implements Serializable {
     private void buildShipArray(Settings cSettings) {
         ships = new ArrayList<>();
         int shipNumber = 1;
-        for (int i = 1; i <= cSettings.getAmountOfCorvette(); i++) {
+        for (int i = 1; i <= cSettings.getAmountOfDestroyer(); i++) {
             Ship ship = new Destroyer(shipNumber);
             ships.add(ship);
             shipNumber++;

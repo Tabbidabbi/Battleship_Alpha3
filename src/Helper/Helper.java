@@ -109,6 +109,7 @@ public class Helper {
 			String yCoordinate = Integer.toString(Coordinate);
 			String xCoordinate = getAiXCoordinate(playerList, playerNumber);
 			coordinateInput = yCoordinate + xCoordinate;
+                        error = false;
 			// Prueft, ob Koordinate getroffen
 			for (int i = 0; i < playerList.get(playerNumber).getPlayfield().getFieldMatrix().length; i++) {
 				for (int j = 0; j < playerList.get(playerNumber).getPlayfield().getFieldMatrix()[i].length; j++) {
@@ -232,7 +233,7 @@ public class Helper {
     * Gibt Schiffindex zurück, mit dem angegriffen werden soll
     * @param player Spielerarray
     * @param playerN Spielernummer
-    * @return shipIndex
+    * @return shipIndex6
     */
    public static int getAvailableShipToShoot(ArrayList<Player> playerList, int playerindex) {
 	   boolean error = true;

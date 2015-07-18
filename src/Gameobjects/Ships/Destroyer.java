@@ -8,11 +8,13 @@ public class Destroyer extends Ship implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = -4752146596402397185L;
-	String name = "Zerstörer";
+	String name = "Zerstoerer";
+        boolean isPlaced;
 
 	//Zerstörer positionieren
     public Destroyer(int number) {
         super("Z", 5, false, number, false, 3, 0, 3, "Zerstoerer");
+        this.isPlaced = false;
         // TODO Auto-generated constructor stub
     }
 
